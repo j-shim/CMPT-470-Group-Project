@@ -17,3 +17,19 @@ cd server
 npm install
 npm run dev
 ```
+
+Populating database:
+
+```bash
+mysql -u root
+set names 'utf8mb4';
+source /path/to/project/server/db_init.sql
+source /path/to/project/server/data/title_with_ratings.sql
+```
+
+Testing Bookshelf/Knex:
+
+```bash
+cd server/public/scripts
+node test_movie_titles.js
+```
