@@ -1,16 +1,16 @@
-const MovieTitle = require("../../models/movieTitle");
+const MovieTitle = require("../models/movieTitle")
 
 const Promise = require("bluebird")
 
 Promise.try(() => {
-    return MovieTitle.query(qb => {
-            qb.where('averageRating', '>', 8.0)
-            qb.andWhere('numVotes', '>', 100000)
-        })
-        .fetchAll()
-        .then(result => {
-            console.log(result.toJSON());
-        })
+  return MovieTitle.query(qb => {
+    qb.where('averageRating', '>', 8.0)
+    qb.andWhere('numVotes', '>', 100000)
+  })
+    .fetchAll()
+    .then(result => {
+      console.log(result.toJSON())
+    })
 })
 
 // async function fetchMovie() {

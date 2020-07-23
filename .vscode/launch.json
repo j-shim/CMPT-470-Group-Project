@@ -9,14 +9,18 @@
       "request": "launch",
       "name": "[React] Launch Chrome against localhost",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/client"
+      "webRoot": "${workspaceFolder}/client",
+      "skipFiles": [
+        "${workspaceFolder}/client/node_modules/**/*.js"
+      ]
     },
     {
       "name": "[Express] Attach",
       "port": 9229,
       "request": "attach",
       "skipFiles": [
-        "<node_internals>/**"
+        "<node_internals>/**",
+        "${workspaceFolder}/server/node_modules/**/*.js"
       ],
       "type": "pwa-node"
     }

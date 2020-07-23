@@ -1,5 +1,5 @@
-const bookshelf = require("../bookshelf");
+const bookshelf = require("../config/bookshelf")
 
 module.exports = bookshelf.model("MovieTitle", {
-    tableName: "title_with_ratings",
-});
+  tableName: "title_with_ratings",
+})

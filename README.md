@@ -30,6 +30,6 @@ source /path/to/project/server/data/title_with_ratings.sql
 Testing Bookshelf/Knex:
 
 ```bash
-cd server/public/scripts
+cd server/scripts
 node test_movie_titles.js
 ```
