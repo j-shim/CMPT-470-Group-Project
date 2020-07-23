@@ -1,4 +1,9 @@
 import React from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import './Movie.scss'
 
 var urlbase = "https://api.themoviedb.org/3/"
 let APIKEY = "2eee6eebccdf970062dbd4c43dac66a6"
@@ -17,6 +22,7 @@ class Movie extends React.Component {
     }
 
     componentDidMount() {
+        
         let urlconfig = "".concat(urlbase,'configuration?api_key=', APIKEY);
         let urltrending = "".concat(urlbase,'trending/movie/week?api_key=', APIKEY);
         console.log(urlconfig);
@@ -58,26 +64,24 @@ class Movie extends React.Component {
             )
     }
 
-    
-
     render() {
-        const { error, isLoaded, items } = this.state;
+        const { error, isLoaded } = this.state;
         if (error) {
           return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
           return <div>Loading...</div>;
         } else {
           return (
-          <div className = 'col-lg-3'>
-          <ul>
+          <GridList cellHeight={325} cols={8}>
             {this.state.trendingMovies.map(trendingMovies => (
-            <li key={trendingMovies.id}>
-                <img src = {this.state.baseImageURL.concat('w185',trendingMovies.poster_path)} alt="poster"></img>
-                {trendingMovies.title}
-            </li>
+            <GridListTile key={trendingMovies.id}>
+                <img src = {this.state.baseImageURL.concat('w300',trendingMovies.poster_path)} alt= {trendingMovies.title}></img>
+                <GridListTileBar
+                  title={trendingMovies.title}
+                  />  
+            </GridListTile>
             ))}
-          </ul>
-          </div>
+          </GridList>
           );
         }
       }
