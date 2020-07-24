@@ -10,7 +10,6 @@ const User = require('../models/user')
 // routes
 router.post('/authenticate', authenticate)
 router.post('/register', register)
-router.get('/validate-token', validateToken)
 
 module.exports = router
 
@@ -27,8 +26,8 @@ function authenticate(req, res, next) {
   }
 
   User.query(qb => {
-      qb.where('username', username)
-    })
+    qb.where('username', username)
+  })
     .fetchAll()
     .then(results => {
       if (results && results.length === 0) {
@@ -37,7 +36,7 @@ function authenticate(req, res, next) {
         })
       }
 
-      resultsJSON = results.toJSON();
+      resultsJSON = results.toJSON()
       hash = resultsJSON[0].hash
       if (bcrypt.compareSync(password, hash)) {
         const token = jwt.sign({
@@ -135,8 +134,8 @@ function register(req, res, next) {
 
 
   User.query(qb => {
-      qb.where('username', username)
-    })
+    qb.where('username', username)
+  })
     .fetchAll()
     .then(results => {
       if (results && results.length > 0) {
@@ -150,26 +149,20 @@ function register(req, res, next) {
       const hash = bcrypt.hashSync(password, salt)
 
       User.forge({
-          firstname,
-          lastname,
-          username,
-          hash
-        }).save()
+        firstname,
+        lastname,
+        username,
+        hash
+      }).save()
         .then(result => {
-          console.log(result);
+          console.log(result)
           return res.json({})
         })
         .catch(err => {
-          return next(err);
+          return next(err)
         })
     })
     .catch(err => {
       return next(err)
     })
-}
-
-// simple function to validate json web token
-// If invalid, JWT middleware will catch and return 401 error
-function validateToken(req, res, next) {
-  return res.json({})
 }
