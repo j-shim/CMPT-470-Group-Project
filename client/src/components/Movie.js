@@ -64,6 +64,10 @@ class Movie extends React.Component {
             )
     }
 
+    filteredSearch = (filteredGenre) => {
+      let url = "".concat(urlbase,'configuration?api_key=', APIKEY, '&query=', );
+    } 
+
     render() {
         const { error, isLoaded } = this.state;
         if (error) {
