@@ -8,7 +8,7 @@ import {
 import axios from 'axios'
 import CONSTANTS from './constants/constants'
 
-import Navbar from './components/Navbar'
+import MenuBar from './components/MenuBar'
 import Login from './components/Login'
 import Register from './components/Register'
 import Dashboard from './components/Dashboard'
