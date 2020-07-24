@@ -46,8 +46,8 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App" >
-        <MenuBar isLoggedIn={this.state.isLoggedIn} setLoggedIn={this.setLoggedIn} />
+      <div className="App">
+        <Navbar isLoggedIn={this.state.isLoggedIn} setLoggedIn={this.setLoggedIn} />
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
