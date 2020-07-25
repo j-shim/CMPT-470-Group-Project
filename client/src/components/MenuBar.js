@@ -37,11 +37,11 @@ export default class MenuBar extends Component {
             <ul className="navbar-nav">
               <li className="nav-item">
                 {this.props.isLoggedIn ?
-                  <div class="dropdown">
-                    <button style={{color: 'white'}} class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div className="dropdown">
+                    <button style={{color: 'white'}} className="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       My Account
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <NavLink style={{backgroundColor: 'white', color: 'black'}} to="/dashboard" activeClassName="active" className="dropdown-item">My List</NavLink>
                       <NavLink style={{backgroundColor: 'white', color: 'black'}} to="/dashboard" activeClassName="active" className="dropdown-item">Edit Profile</NavLink>
                       <span onClick={this.logout} style={{cursor: 'pointer'}} className="dropdown-item">Logout</span>
