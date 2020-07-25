@@ -2,7 +2,7 @@
 
 ## Checkpoint
 
-For the checkpoint, we have worked on:
+For the checkpoint, we have worked on: <br />
 -Set up the back-end environment <br />
 -Set up the MySQL environment with some data <br />
 -Implemented a login/register system for our movie web application <br />
