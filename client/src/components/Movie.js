@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import PropTypes from 'prop-types'
 import './Movie.scss'
 
 var urlbase = "https://api.themoviedb.org/3/"
@@ -22,10 +23,12 @@ class Movie extends React.Component {
     }
 
     componentDidMount() {
-        
         let urlconfig = "".concat(urlbase,'configuration?api_key=', APIKEY);
         let urltrending = "".concat(urlbase,'trending/movie/week?api_key=', APIKEY);
+        
         console.log(urlconfig);
+        console.log("Trending: " + this.props.activeTrending);
+
         fetch(urlconfig)
             .then(result => {
                 return result.json();
@@ -64,30 +67,79 @@ class Movie extends React.Component {
             )
     }
 
-    filteredSearch = (filteredGenre) => {
-      let url = "".concat(urlbase,'configuration?api_key=', APIKEY, '&query=', );
-    } 
+    trendingSearch = (trendingInput) => {
+      let urlconfig = "".concat(urlbase,'configuration?api_key=', APIKEY);
+      let urltrending = "".concat(urlbase,'trending/movie/', trendingInput,'?api_key=', APIKEY);
+
+      fetch(urlconfig)
+          .then(result => {
+              return result.json();
+          })
+          .then(
+          (data) => {
+            this.setState({
+              isLoaded: true,
+              configData: data.images,
+              baseImageURL: data.images.secure_base_url,
+            });
+            console.log(data);
+            console.log(this.state.baseImageURL);
+          },
+          (error) => {
+            this.setState({
+              isLoaded: true,
+              error
+            });
+          }
+      )
+      fetch(urltrending)
+          .then(res => {
+              return res.json();
+          })
+          .then(
+              (trendingdata) => {
+                  this.setState({
+                    trendingMovies: trendingdata.results,
+                  });
+                  console.log(this.state.trendingMovies);
+                },
+          )
+    }
+
+    componentDidUpdate(prevProps) {
+      if(prevProps.activeTrending !== this.props.activeTrending) {
+        console.log("Changing trending list");
+        this.trendingSearch(this.props.activeTrending);
+      }
+    }
 
     render() {
-        const { error, isLoaded } = this.state;
-        if (error) {
-          return <div>Error: {error.message}</div>;
-        } else if (!isLoaded) {
-          return <div>Loading...</div>;
-        } else {
-          return (
-          <GridList cellHeight={325} cols={8}>
-            {this.state.trendingMovies.map(trendingMovies => (
-            <GridListTile key={trendingMovies.id}>
-                <img src = {this.state.baseImageURL.concat('w300',trendingMovies.poster_path)} alt= {trendingMovies.title}></img>
-                <GridListTileBar
-                  title={trendingMovies.title}
-                  />  
-            </GridListTile>
-            ))}
-          </GridList>
-          );
-        }
+      const { error, isLoaded } = this.state;
+      if (error) {
+        return <div>Error: {error.message}</div>;
+      } else if (!isLoaded) {
+        return <div>Loading...</div>;
+      } else {
+        return (
+          <div className="movie-container">
+            <GridList cellHeight={325} cols={4}>
+              {this.state.trendingMovies.map(trendingMovies => (
+              <GridListTile key={trendingMovies.id}>
+                  <img src = {this.state.baseImageURL.concat('w300',trendingMovies.poster_path)} alt= {trendingMovies.title}></img>
+                  <GridListTileBar
+                    title={trendingMovies.title}
+                    />  
+              </GridListTile>
+              ))}
+            </GridList>
+          </div>
+        );
       }
+    }
 }
+
+Movie.propTypes = {
+  activeTrending: PropTypes.string.isRequired
+};
+
 export default Movie;
