@@ -1,5 +1,20 @@
-const bookshelf = require("../config/bookshelf")
+const bookshelf = require('../config/bookshelf')
 
-module.exports = bookshelf.model("User", {
-    tableName: "users",
+const User = bookshelf.model('User', {
+  tableName: 'users',
 })
+
+// Test-run MySQL connection with dummy query
+User.query(qb => {
+  qb.where('username', 'test')
+})
+  .fetchAll()
+  .then(results => {
+    console.log('MySQL connection successful')
+  })
+  .catch(err => {
+    console.error('MySQL connection error')
+    console.error(err)
+  })
+
+module.exports = User
