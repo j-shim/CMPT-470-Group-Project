@@ -1,5 +1,14 @@
 # CMPT 470 Group Project
 
+## Checkpoint
+
+For the checkpoint, we have worked on:
+-Set up the back-end environment
+-Set up the MySQL environment with some data
+-Implemented a login/register system for our movie web application
+-Created a simple UI of our dashboard with moies displaying after user logs in
+-Created a simple "Trending" filter for now that displays different movie selections depending on the filter applied
+
 ## Running Dev Server
 
 For React on http://localhost:3000/:
