@@ -17,13 +17,21 @@ function axiosInterceptors() {
   // Sets Authorization header to 'Bearer <token>
   axios.interceptors.request.use(
     config => {
-      const { origin } = new URL(config.url)
-      const allowedOrigins = [CONSTANTS.API_URL]
-      const token = localStorage.getItem(CONSTANTS.TOKEN_KEY)
-      if (allowedOrigins.includes(origin)) {
-        config.headers.authorization = `Bearer ${token}`
+      if (process.env.NODE_ENV === 'production') {
+        const token = localStorage.getItem(CONSTANTS.TOKEN_KEY)
+        if (config.url.includes(CONSTANTS.API_URL)) {
+          config.headers.authorization = `Bearer ${token}`
+        }
+        return config
+      } else {
+        const { origin } = new URL(config.url)
+        const allowedOrigins = [CONSTANTS.API_URL]
+        const token = localStorage.getItem(CONSTANTS.TOKEN_KEY)
+        if (allowedOrigins.includes(origin)) {
+          config.headers.authorization = `Bearer ${token}`
+        }
+        return config
       }
-      return config
     },
     error => {
       return Promise.reject(error)

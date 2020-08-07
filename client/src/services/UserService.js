@@ -9,7 +9,9 @@ export default {
 
 function login(payload) {
   const options = {
-    headers: { 'Content-Type': 'application/json' }
+    headers: {
+      'Content-Type': 'application/json'
+    }
   }
   const url = CONSTANTS.API_URL + '/users/authenticate'
 
@@ -18,7 +20,9 @@ function login(payload) {
 
 function register(payload) {
   const options = {
-    headers: { 'Content-Type': 'application/json' }
+    headers: {
+      'Content-Type': 'application/json'
+    }
   }
   const url = CONSTANTS.API_URL + '/users/register'
 
