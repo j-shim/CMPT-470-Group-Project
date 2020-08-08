@@ -12,6 +12,7 @@ import MenuBar from './components/MenuBar'
 import Login from './components/Login'
 import Register from './components/Register'
 import Dashboard from './components/Dashboard'
+import Trending from './components/Trending'
 
 function axiosInterceptors() {
   // Sets Authorization header to 'Bearer <token>
@@ -73,6 +74,9 @@ class App extends Component {
           </Route>
           <Route path="/dashboard">
             <Dashboard isLoggedIn={this.state.isLoggedIn} />
+          </Route>
+          <Route path="/trending">
+            <Trending isLoggedIn={this.state.isLoggedIn} />
           </Route>
         </Switch>
       </div>

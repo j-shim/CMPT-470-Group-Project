@@ -13,12 +13,20 @@
 .buttons {
     border: 1px solid;
     border-radius: 10px;
-    margin: 10px;
+    margin: 5px 10px;
     padding: 0 10px;
-    width: 100px;
+    width: 150px;
 }
 
 .buttons:hover {
-    background-color: rgb(255, 145, 1);
-    // color: white;
+    // background-color: rgb(255, 145, 1);
+    // color: rgb(255, 145, 1);
+}
+
+.filter-container {
+    padding: 10px;
+    margin: 20px 0;
+}
+.genre-filter {
+    grid-template-columns: 1fr 1fr;
 }

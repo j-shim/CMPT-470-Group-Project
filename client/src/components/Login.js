@@ -28,7 +28,7 @@ export default class Login extends Component {
 
     UserService.login(payload)
       .then((res) => {
-        console.log(res)
+        console.log("Login response: " + res.data)
         console.log(res.data.token)
         // store jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem(CONSTANTS.TOKEN_KEY, res.data.token)

@@ -8,21 +8,28 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //isFiltered: false,
-      // filters: [
-      //   {activeTrending: "week"}
-      // ]
-      activeTrending: "week"
+      filters: {
+        isAdult: false,
+        startAfter: 1950,
+        endBefore: 2020,
+        runtimeMinutes: {
+          from: 60,
+          to: 400
+        },
+        genres: [],
+        averageRating: {
+          from: 0,
+          to: 10
+        },
+        numVotes: 1000,
+        titleIncludes: null,
+        numMovies: 20
+      }
     };
   }
 
-  // setIsFiltered = (isFiltered) => {
-  //   this.setState({ isFiltered: isFiltered })
-  // }
+  setFilter() {
 
-  setActiveTrending = (activeTrending) => {
-    console.log("Setting active trending");
-    this.setState({ activeTrending: activeTrending });
   }
 
   render() {
@@ -30,8 +37,8 @@ export default class Dashboard extends Component {
       <div>
         <h1 style={{"padding": "10px"}}>This is the Dashboard - Find your movie here</h1>
         <div className="dashboard-container">
-          <SideFilter setActiveTrending={this.setActiveTrending}/>
-          <Movie activeTrending={this.state.activeTrending}/>
+          <SideFilter setFilter={this.setFilter}/>
+          <Movie filters={this.state.filters}/>
         </div>
       </div>
     ) : <Redirect to="/login" />
