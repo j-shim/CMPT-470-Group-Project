@@ -8,7 +8,7 @@ const helmet = require('helmet')
 
 const usersRouter = require('./routes/users')
 const moviesRouter = require('./routes/movies')
-const userMoviesRouter = require('.routes/user_movie_items')
+const userMoviesRouter = require('./routes/user_movie_items')
 const movieListRouter = require('./routes/movie_list')
 
 const jwt = require('./helpers/jwt')
