@@ -27,7 +27,7 @@ function getMovieItems(req, res, next) {
         .then(async (results) => {
             console.log(results.toJSON());
             // return res.json({
-            //     movieData: await movieRenderer(results.toJSON())
+            //     data: await movieRenderer(results.toJSON())
             // })
         }).catch(err => {
             return next(err);
