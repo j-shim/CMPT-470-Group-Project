@@ -30,7 +30,7 @@ export default class MenuBar extends Component {
               </li>
               <li className="nav-item">
                 {this.props.isLoggedIn ?
-                  <NavLink to="/dashboard" activeClassName="active" className="nav-link">Trending</NavLink>
+                  <NavLink to="/trending" activeClassName="active" className="nav-link">Trending</NavLink>
                   : <span></span>}
               </li>
             </ul>
