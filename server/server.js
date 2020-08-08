@@ -13,8 +13,8 @@ const config = require('./config/config')
 
 const app = express()
 
-app.use(helmet())
 app.use(cors())
+app.use(helmet())
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
