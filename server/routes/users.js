@@ -3,7 +3,6 @@ const router = express.Router()
 const config = require('../config/config')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
-// const db = require('../helpers/db')
 
 const User = require('../models/user')
 
@@ -26,8 +25,8 @@ function authenticate(req, res, next) {
   }
 
   User.query(qb => {
-    qb.where('username', username)
-  })
+      qb.where('username', username)
+    })
     .fetchAll()
     .then(results => {
       if (results && results.length === 0) {
@@ -56,35 +55,6 @@ function authenticate(req, res, next) {
     .catch(err => {
       return next(err)
     })
-
-  // db.query('SELECT * FROM user WHERE username = ?',
-  //   [username],
-  //   (err, results, fields) => {
-  //     if (err)
-  //       return next(err)
-
-  //     if (results && results.length === 0)
-  //       return res.status(400).json({
-  //         message: 'Username or password is incorrect'
-  //       })
-
-  //     hash = results[0].hash
-  //     if (bcrypt.compareSync(password, hash)) {
-  //       const token = jwt.sign({
-  //         sub: username
-  //       }, config.JWT_SECRET, {
-  //         expiresIn: '1h'
-  //       })
-  //       return res.json({
-  //         token
-  //       })
-  //     } else {
-  //       return res.status(400).json({
-  //         message: 'Username or password is incorrect'
-  //       })
-  //     }
-  //   }
-  // )
 }
 
 function register(req, res, next) {
@@ -108,34 +78,9 @@ function register(req, res, next) {
     })
   }
 
-  // db.query('SELECT * FROM user WHERE username = ?',
-  //   [username],
-  //   (err, results, fields) => {
-  //     if (err) return next(err)
-  //     if (results && results.length > 0) {
-  //       return res.status(400).json({
-  //         message: 'Username ' + username + ' is already taken'
-  //       })
-  //     }
-  //     // hash password
-  //     const salt = bcrypt.genSaltSync(10)
-  //     const hash = bcrypt.hashSync(password, salt)
-
-  //     db.query('INSERT INTO user (firstname, lastname, username, hash) VALUES (?, ?, ?, ?)',
-  //       [firstname, lastname, username, hash],
-  //       (err, results, fields) => {
-  //         if (err) return next(err)
-  //         console.log(results)
-  //         return res.json({})
-  //       }
-  //     )
-  //   }
-  // )
-
-
   User.query(qb => {
-    qb.where('username', username)
-  })
+      qb.where('username', username)
+    })
     .fetchAll()
     .then(results => {
       if (results && results.length > 0) {
@@ -149,11 +94,11 @@ function register(req, res, next) {
       const hash = bcrypt.hashSync(password, salt)
 
       User.forge({
-        firstname,
-        lastname,
-        username,
-        hash
-      }).save()
+          firstname,
+          lastname,
+          username,
+          hash
+        }).save()
         .then(result => {
           console.log(result)
           return res.json({})
