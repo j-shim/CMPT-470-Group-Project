@@ -99,7 +99,7 @@ function generateMovies(req, res, next) {
             // console.log(randomMovies);
 
             return res.json({
-                movieData: randomMovies
+                data: randomMovies
             });
         })
         .catch((err) => {
