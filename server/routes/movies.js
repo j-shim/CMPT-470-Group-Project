@@ -94,9 +94,9 @@ function generateMovies(req, res, next) {
             //Generate movies
             const random = uniqueRandomArray(results.toJSON());
 
-            randomMovies = [];
+            let randomMovies = [];
             for (i = 0; i < filter.numMovies; i++) {
-                randomMovie = random();
+                let randomMovie = random();
 
                 let url = "".concat(
                     baseURL,
@@ -108,8 +108,8 @@ function generateMovies(req, res, next) {
                     randomMovie.startYear
                 );
 
-                data = await fetch(encodeURI(url));
-                dataJSON = await data.json();
+                let data = await fetch(encodeURI(url));
+                let dataJSON = await data.json();
 
                 if (dataJSON.results.length > 0) {
                     randomMovie.overview = dataJSON.results[0].overview;
@@ -120,6 +120,9 @@ function generateMovies(req, res, next) {
             }
 
             // console.log(randomMovies);
+            return res.json({
+                data: randomMovies
+            });
         })
         .catch((err) => {
             return next(err);
