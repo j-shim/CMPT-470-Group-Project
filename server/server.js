@@ -8,6 +8,8 @@ const helmet = require('helmet')
 
 const usersRouter = require('./routes/users')
 const moviesRouter = require('./routes/movies')
+const userMoviesRouter = require('.routes/user_movie_items')
+const movieListRouter = require('./routes/movie_list')
 
 const jwt = require('./helpers/jwt')
 const errorHandler = require('./helpers/error-handler')
@@ -27,6 +29,8 @@ app.use(jwt())
 
 app.use('/users', usersRouter)
 app.use('/movies', moviesRouter)
+app.use('/user-movie-items', userMoviesRouter)
+app.use('/movie-list', movieListRouter)
 
 app.use(errorHandler)
 

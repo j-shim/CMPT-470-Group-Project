@@ -1,13 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const fetch = require("node-fetch");
 
 const uniqueRandomArray = require("unique-random-array");
+const movieRenderer = require('../helpers/movieRenderer')
 
 const MovieTitle = require("../models/movieTitle");
-
-const baseURL = "https://api.themoviedb.org/3/";
-const apiKey = "2eee6eebccdf970062dbd4c43dac66a6";
 
 router.post("/generate", generateMovies);
 
@@ -76,7 +73,6 @@ function generateMovies(req, res, next) {
                 qb.where("runtimeMinutes", "<=", filter.runtimeMinutes.to);
 
             for (genre of filter.genres) {
-                console.log(genre);
                 qb.where("genres", "like", "%" + genre + "%");
             }
 
@@ -96,32 +92,14 @@ function generateMovies(req, res, next) {
 
             let randomMovies = [];
             for (i = 0; i < filter.numMovies; i++) {
-                let randomMovie = random();
-
-                let url = "".concat(
-                    baseURL,
-                    "search/movie?api_key=",
-                    apiKey,
-                    "&query=",
-                    randomMovie.primaryTitle,
-                    "&page=1&year=",
-                    randomMovie.startYear
-                );
-
-                let data = await fetch(encodeURI(url));
-                let dataJSON = await data.json();
-
-                if (dataJSON.results.length > 0) {
-                    randomMovie.overview = dataJSON.results[0].overview;
-                    randomMovie.posterPath = dataJSON.results[0].poster_path;
-                }
-
-                randomMovies.push(randomMovie);
+                randomMovies.push(random());
             }
 
+            randomMovies = await movieRenderer(randomMovies);
             // console.log(randomMovies);
+
             return res.json({
-                data: randomMovies
+                movieData: randomMovies
             });
         })
         .catch((err) => {
