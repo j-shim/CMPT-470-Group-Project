@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import UserService from '../services/UserService'
+import CONSTANTS from '../constants/constants'
 
 export default class Register extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ export default class Register extends Component {
   onSubmit = (event) => {
     event.preventDefault()
 
-    const payload = {
+    const payloadForRegister = {
       firstname: this.state.firstname,
       lastname: this.state.lastname,
       username: this.state.username,
@@ -31,10 +32,30 @@ export default class Register extends Component {
       password2: this.state.password2
     }
 
-    UserService.register(payload)
+    const payloadForLogin = {
+      username: this.state.username,
+      password: this.state.password
+    }
+
+    UserService.register(payloadForRegister)
       .then((res) => {
         console.log(res)
         // auto login user
+
+        UserService.login(payloadForLogin)
+          .then((res) => {
+            console.log("Login response: " + res.data)
+            console.log(res.data.token)
+            // store jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem(CONSTANTS.TOKEN_KEY, res.data.token)
+            this.props.setLoggedIn(true)
+
+            // return user
+          }).catch((err) => {
+            // debugger
+            // console.error(err.response.data.message)
+            console.error(err)
+          })
       }).catch((err) => {
         // debugger
         // console.error(err.response.data.message)

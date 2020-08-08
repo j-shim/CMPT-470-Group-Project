@@ -70,7 +70,7 @@ class App extends Component {
           </Route>
           <Route path="/register">
             {this.state.isLoggedIn && <Redirect to="/dashboard" />}
-            {!this.state.isLoggedIn && <Register />}
+            {!this.state.isLoggedIn && <Register setLoggedIn={this.setLoggedIn} />}
           </Route>
           <Route path="/dashboard">
             <Dashboard isLoggedIn={this.state.isLoggedIn} />
