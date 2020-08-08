@@ -7,6 +7,8 @@ const cors = require('cors')
 const helmet = require('helmet')
 
 const usersRouter = require('./routes/users')
+const moviesRouter = require('./routes/movies')
+
 const jwt = require('./helpers/jwt')
 const errorHandler = require('./helpers/error-handler')
 const config = require('./config/config')
@@ -17,11 +19,14 @@ app.use(cors())
 app.use(helmet())
 app.use(logger('dev'))
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({
+  extended: false
+}))
 app.use(cookieParser())
 app.use(jwt())
 
 app.use('/users', usersRouter)
+app.use('/movies', moviesRouter)
 
 app.use(errorHandler)
 

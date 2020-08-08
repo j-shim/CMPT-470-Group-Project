@@ -11,6 +11,8 @@ const apiKey = "2eee6eebccdf970062dbd4c43dac66a6";
 
 router.post("/generate", generateMovies);
 
+module.exports = router;
+
 function generateMovies(req, res, next) {
     // const filter = {
     //     type: "movie",
