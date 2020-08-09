@@ -8,7 +8,7 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filters: {
+      filter: {
         type: "movie",
         isAdult: false,
         startAfter: 1950,
@@ -24,14 +24,13 @@ export default class Dashboard extends Component {
         },
         numVotes: 1000,
         titleIncludes: null,
-        numMovies: 20
+        numMovies: 5
       }
     };
   }
 
   setFilter = (filter) => {
     this.setState({filter: filter});
-    console.log("Changing filter");
   }
 
   render() {
@@ -40,7 +39,7 @@ export default class Dashboard extends Component {
         <h1 style={{"padding": "10px"}}>This is the Dashboard - Find your movie here</h1>
         <div className="dashboard-container">
           <SideFilter setFilter={this.setFilter}/>
-          <Movie filters={this.state.filters}/>
+          <Movie filter={this.state.filter}/>
         </div>
       </div>
     ) : <Redirect to="/login" />

@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import Slider from '@material-ui/core/Slider'
+import Checkbox from '@material-ui/core/Checkbox'
+import Radio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 import './SideFilter.scss'
 
 export default class SideFilter extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAdultButton: {
-                name: "Adult Movies", 
-                bgColor: "white"
-            },
             genreButtons: [
                 {name: "Action", bgColor: "white"},
                 {name: "Adventure", bgColor: "white"},
@@ -26,6 +27,12 @@ export default class SideFilter extends Component {
                 {name: "Thriller", bgColor: "white"},
                 {name: "War", bgColor: "white"}
             ],
+            numMoviesButtons: [
+                {name: 10, bgColor: "white"},
+                {name: 20, bgColor: "white"},
+                {name: 25, bgColor: "white"},
+                {name: 50, bgColor: "white"},
+            ],
             filter: {
                 type: "movie",
                 isAdult: false,
@@ -35,48 +42,67 @@ export default class SideFilter extends Component {
                     from: 30, 
                     to: 400
                 },
+                genres: [],
                 averageRating: {
                     from: 0.0,
                     to: 10.0
                 },
-                numVotes: 300,
+                numVotes: 500,
                 titleIncludes: null,
                 numMovies: 20
             }
         }
     }
 
-    isAdultOnClick() {
-        let temp = this.state.isAdultButton;
-        let tempFilter = this.state.filter;
-
-        //Setting bgColor of button
-        if(temp.bgColor === "orange") {
-            temp.bgColor = "white";
-            tempFilter.isAdult = false;
-        }else if (temp.bgColor === "white") {
-            temp.bgColor = "orange";
-            tempFilter.isAdult = true;
-        }
-
-        this.setState({isAdultButtons: temp});
-        this.setState({filter: tempFilter});
-        this.props.setFilter(this.state.filter);
-    }
-
     genreOnClick(index) {
         let temp = this.state.genreButtons;
         let tempFilter = this.state.filter;
 
-        //Setting bgColor of button
         if(temp[index].bgColor === "orange") {
             temp[index].bgColor = "white";
+
+            for(let i = 0; i < tempFilter.genres.length; i++) {
+                if(tempFilter.genres[i] === temp[index].name) {
+                    console.log("Removing " + tempFilter.genres[i] + " from genres");
+                    tempFilter.genres.splice(i, 1);
+                    break;
+                }
+            }
+
+            console.log(tempFilter.genres);
+
         }else if (temp[index].bgColor === "white") {
             temp[index].bgColor = "orange";
+
+            console.log("Adding  " + temp[index].name + " to genres");
+            tempFilter.genres.push(temp[index].name)
         }
 
         this.setState({genreButtons: temp});
         this.setState({filter: tempFilter});
+    }
+
+    numMoviesOnClick(index) {
+        let temp = this.state.numMoviesButtons;
+        let tempFilter = this.state.filter;
+
+        if (temp[index].bgColor === "white") {
+            for(let i = 0; i < temp.length; i++) {
+                if(i !== index) {
+                    temp[i].bgColor = "white";
+                }else {
+                    temp[i].bgColor = "orange";
+                }
+            }
+        }
+
+        tempFilter.numMovies = temp[index].name;
+
+        this.setState({numMoviesButtons: temp});
+        this.setState({filter: tempFilter});
+    }
+
+    filterOnClick() {
         this.props.setFilter(this.state.filter);
     }
 
@@ -87,9 +113,27 @@ export default class SideFilter extends Component {
                 <hr/>
                 <div className="isAdult-filter filter-container">
                     <h5>Adult</h5>
-                    <button className="buttons" style={{backgroundColor:this.state.isAdultButton.bgColor}} onClick={() => this.isAdultOnClick()}>
-                        {this.state.isAdultButton.name}
-                    </button>
+                        <Checkbox
+                            onChange={(event) => {
+                                let tempFilter = this.state.filter;
+                                tempFilter.isAdult = event.target.checked;
+                                this.setState({filter: tempFilter});
+                            }}
+                        />
+                        <label>Adult Content</label>
+                </div>
+                <div className="type-filter filter-container">
+                    <h5>Type</h5>
+                    <FormControl className="type-filter" component="fieldset">
+                        <RadioGroup aria-label="type" name="type" value={this.state.filter.type} onChange={(event) => {
+                            let tempFilter = this.state.filter;
+                            tempFilter.type = event.target.value;
+                            this.setState({filter: tempFilter});
+                        }}>
+                            <FormControlLabel value="movie" control={<Radio />} label="Movie" />
+                            <FormControlLabel value="tv-series" control={<Radio />} label="TV Series" />
+                        </RadioGroup>
+                    </FormControl>
                 </div>
                 <div className="genre-filter filter-container">
                     <h5>Genres</h5>
@@ -105,13 +149,30 @@ export default class SideFilter extends Component {
                         value={[this.state.filter.startAfter, this.state.filter.endBefore]}
                         min={1900}
                         max={2020}
+                        marks={[
+                            {
+                                value: 1900,
+                                label: '1900'
+                            },
+                            {
+                                value: 1950,
+                                label: '1950'
+                            },
+                            {
+                                value: 2000,
+                                label: '2000'
+                            },
+                            {
+                                value: 2020,
+                                label: '2020'
+                            }
+                        ]}
                         step={10}
                         onChange={(event, newValue) => {
                             let tempFilter = this.state.filter;
                             tempFilter.startAfter = newValue[0];
                             tempFilter.endBefore = newValue[1];
                             this.setState({filter: tempFilter});
-                            this.props.setFilter(this.state.filter);
                         }}
                         valueLabelDisplay="auto"
                         aira-labelledby="range-slider"
@@ -121,15 +182,36 @@ export default class SideFilter extends Component {
                     <h5>Runtime</h5>
                     <Slider 
                         value={[this.state.filter.runtimeMinutes.from, this.state.filter.runtimeMinutes.to]}
-                        min={40}
+                        min={0}
                         max={400}
                         step={20}
+                        marks={[
+                            {
+                                value: 0,
+                                label: '0'
+                            },
+                            {
+                                value: 60,
+                                label: '60'
+                            },
+                            {
+                                value: 120,
+                                label: '120'
+                            },
+                            {
+                                value: 240,
+                                label: '240'
+                            },
+                            {
+                                value: 400,
+                                label: '400'
+                            }
+                        ]}
                         onChange={(event, newValue) => {
                             let tempFilter = this.state.filter;
                             tempFilter.runtimeMinutes.from = newValue[0];
                             tempFilter.runtimeMinutes.to = newValue[1];
                             this.setState({filter: tempFilter});
-                            this.props.setFilter(this.state.filter);
                         }}
                         valueLabelDisplay="auto"
                         aira-labelledby="range-slider"
@@ -140,12 +222,34 @@ export default class SideFilter extends Component {
                     <Slider 
                         value={[this.state.filter.averageRating.from, this.state.filter.averageRating.to]}
                         max={10}
+                        step={0.5}
+                        marks={[
+                            {
+                                value: 0.0,
+                                label: '0.0'
+                            },
+                            {
+                                value: 2.5,
+                                label: '2.5'
+                            },
+                            {
+                                value: 5.0,
+                                label: '5.0'
+                            },
+                            {
+                                value: 7.5,
+                                label: '7.5'
+                            },
+                            {
+                                value: 10.0,
+                                label: '10.0'
+                            }
+                        ]}
                         onChange={(event, newValue) => {
                             let tempFilter = this.state.filter;
                             tempFilter.averageRating.from = newValue[0];
                             tempFilter.averageRating.to = newValue[1];
                             this.setState({filter: tempFilter});
-                            this.props.setFilter(this.state.filter);
                         }}
                         valueLabelDisplay="auto"
                         aira-labelledby="range-slider"
@@ -153,7 +257,53 @@ export default class SideFilter extends Component {
                 </div>
                 <div className="num-votes-filter filter-container">
                     <h5>Number of Votes</h5>
+                    <Slider
+                        min={0}
+                        max={2000}
+                        step={250}
+                        marks={[
+                            {
+                                value: 0,
+                                label: '0'
+                            },
+                            {
+                                value: 250,
+                                label: '250+'
+                            },
+                            {
+                                value: 500,
+                                label: '500+'
+                            },
+                            {
+                                value: 1000,
+                                label: '1000+'
+                            },
+                            {
+                                value: 2000,
+                                label: '2000+'
+                            }
+                        ]}
+                        onChange={(event, newValue) => {
+                            let tempFilter = this.state.filter;
+                            tempFilter.numVotes = newValue;
+                            this.setState({filter: tempFilter});
+                        }}
+                        aira-labelledby="discrete-slider"
+                    />
                 </div>
+                <div className="title-includes-filter filter-container">
+                    <h5>Title Includes </h5>
+                    <p>Add textfield to search</p>
+                </div>
+                <div className="num-movies-filter filter-container">
+                    <h5>Number Of Movies Shown</h5>
+                    {this.state.numMoviesButtons.map((numMovies, index) => 
+                        <button className="buttons" style={{backgroundColor:this.state.numMoviesButtons[index].bgColor}} key={index} onClick={() => this.numMoviesOnClick(index)}>
+                            {numMovies.name}
+                        </button>
+                    )}
+                </div>
+                <button className="buttons submit" onClick={() => this.filterOnClick()}>Search</button>
             </div>
         )
     }
