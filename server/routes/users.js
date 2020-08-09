@@ -25,8 +25,8 @@ function authenticate(req, res, next) {
   }
 
   User.query(qb => {
-      qb.where('username', username)
-    })
+    qb.where('username', username)
+  })
     .fetchAll()
     .then(results => {
       if (results && results.length === 0) {
@@ -39,7 +39,7 @@ function authenticate(req, res, next) {
       hash = resultsJSON[0].hash
       if (bcrypt.compareSync(password, hash)) {
         const token = jwt.sign({
-          sub: username
+          sub: resultsJSON[0].id
         }, config.JWT_SECRET, {
           expiresIn: '1h'
         })
@@ -79,8 +79,8 @@ function register(req, res, next) {
   }
 
   User.query(qb => {
-      qb.where('username', username)
-    })
+    qb.where('username', username)
+  })
     .fetchAll()
     .then(results => {
       if (results && results.length > 0) {
@@ -94,11 +94,11 @@ function register(req, res, next) {
       const hash = bcrypt.hashSync(password, salt)
 
       User.forge({
-          firstname,
-          lastname,
-          username,
-          hash
-        }).save()
+        firstname,
+        lastname,
+        username,
+        hash
+      }).save()
         .then(result => {
           console.log(result)
           return res.json({})
