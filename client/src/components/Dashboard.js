@@ -9,6 +9,7 @@ export default class Dashboard extends Component {
     super(props);
     this.state = {
       filters: {
+        type: "movie",
         isAdult: false,
         startAfter: 1950,
         endBefore: 2020,
@@ -28,8 +29,9 @@ export default class Dashboard extends Component {
     };
   }
 
-  setFilter() {
-
+  setFilter = (filter) => {
+    this.setState({filter: filter});
+    console.log("Changing filter");
   }
 
   render() {
