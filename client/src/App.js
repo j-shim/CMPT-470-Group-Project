@@ -13,6 +13,8 @@ import Login from './components/Login'
 import Register from './components/Register'
 import Dashboard from './components/Dashboard'
 import Trending from './components/Trending'
+import UserList from './components/UserList'
+import AddMovie from './components/AddMovie'
 import Alert from './components/Alert'
 
 function axiosInterceptors() {
@@ -106,6 +108,12 @@ class App extends Component {
           </Route>
           <Route path="/trending">
             <Trending isLoggedIn={this.state.isLoggedIn} />
+          </Route>
+          <Route path="/list">
+            <UserList isLoggedIn={this.state.isLoggedIn} />
+          </Route>
+          <Route path="/add">
+            <AddMovie isLoggedIn={this.state.isLoggedIn} />
           </Route>
         </Switch>
       </div>

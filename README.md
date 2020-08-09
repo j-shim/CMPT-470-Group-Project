@@ -13,7 +13,7 @@ For the checkpoint, we have worked on:
 
 ## Running Dev Server
 
-For React on http://localhost:3000/:
+### React Frontend on http://localhost:3000/:
 
 ```bash
 cd client
@@ -21,7 +21,7 @@ npm install
 npm start
 ```
 
-For Express on http://localhost:3001/:
+### Express Backend on http://localhost:3001/:
 
 ```bash
 cd server
@@ -29,27 +29,35 @@ npm install
 npm run dev
 ```
 
-Populating database:
+### Database Setup
+
+**Steps 1 and 2 in a single script** (Unix/Linux):
 
 ```bash
-sudo mysql -u root
-set names 'utf8mb4';
-source full/path/to/project/server/data/db_init.sql
-source full/path/to/project/server/data/title_with_ratings.sql
+server/scripts/db_setup_linux.sh
 ```
 
-Testing Bookshelf/Knex:
+**Step 1.** Populating database:
+
+```bash
+mysql -u root
+source full/path/to/project/server/scripts/db_init.sql
+source full/path/to/project/server/scripts/title_with_ratings.sql
+```
+
+**Step 2.** Knex migration:
+
+```bash
+npm i knex -g
+cd server/config
+knex migrate:latest
+
+# knex migrate:rollback (nuke all tables)
+```
+
+**Optional.** Testing Bookshelf/Knex:
 
 ```bash
 cd server/scripts
 node test_movie_titles.js
-```
-
-Knex migration:
-
-```bash
-npm i knex -g
-cd config
-knex migrate:latest
-knex migrate:rollback (nuke all tables)
 ```
