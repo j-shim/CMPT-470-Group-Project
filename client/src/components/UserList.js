@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
@@ -14,7 +15,21 @@ export default class UserList extends Component {
       error: null,
       isLoaded: false,
       usersMovies: [
-        "Jaws", "Parasite", "Toy Story 3", "Saving Private Ryan"
+        {
+          title: "Jaws",
+          year: 1997,
+          poster: "https://image.tmdb.org/t/p/w200/s2xcqSFfT6F7ZXHxowjxfG0yisT.jpg"
+        },
+        {
+          title: "Joker",
+          year: 2019,
+          poster: "https://image.tmdb.org/t/p/w200/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg"
+        },
+        {
+          title: "Toy Story 3",
+          year: 2010,
+          poster: "http://image.tmdb.org/t/p/w200/4cpGytCB0eqvRks4FAlJoUJiFPG.jpg"
+        }
       ],
       usersMoviePosterURL: [],
     }
@@ -29,10 +44,11 @@ export default class UserList extends Component {
           {this.state.usersMovies.map(userMovies => (
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                <img src ="https://image.tmdb.org/t/p/w200/tqXiOD5rTyHgabO73Tpw9JDbd88.jpg"></img>
+                <img src ={userMovies.poster} alt = "movie-posters"></img>
               </ListItemAvatar>
               <ListItemText
-                primary={userMovies}
+                key = {userMovies.title}
+                primary={userMovies.title}
                 secondary={
                   <React.Fragment>
                     <Typography
@@ -40,7 +56,7 @@ export default class UserList extends Component {
                       variant="body2"
                       color="textPrimary"
                     >
-                      Movie Year here
+                      {userMovies.year}
                     </Typography>
 
                   </React.Fragment>
@@ -61,8 +77,9 @@ export default class UserList extends Component {
                     />  
               </GridListTile>
               ))}
+              
         </GridList> */}
-        <button className="btn btn-primary">Add Movie</button>
+        <Link to="/add"><button className="btn btn-primary" >Add Movie</button></Link>
       </div>
     ) : <Redirect to="/login" />
   }
