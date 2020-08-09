@@ -42,7 +42,7 @@ export default class MenuBar extends Component {
                       My Account
                     </button>
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <NavLink style={{backgroundColor: 'white', color: 'black'}} to="/dashboard" activeClassName="active" className="dropdown-item">My List</NavLink>
+                      <NavLink style={{backgroundColor: 'white', color: 'black'}} to="/list" activeClassName="active" className="dropdown-item">My List</NavLink>
                       <NavLink style={{backgroundColor: 'white', color: 'black'}} to="/dashboard" activeClassName="active" className="dropdown-item">Edit Profile</NavLink>
                       <span onClick={this.logout} style={{cursor: 'pointer'}} className="dropdown-item">Logout</span>
 
