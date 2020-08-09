@@ -26,36 +26,47 @@ export default class SideFilter extends Component {
                 {name: "Thriller", bgColor: "white"},
                 {name: "War", bgColor: "white"}
             ],
-            startAfter: 1950,
-            endBefore: 2020,
-            runtimeMinutes: {
-                from: 30, 
-                to: 400
-            },
-            averageRating: {
-                from: 0.0,
-                to: 10.0
-            },
-            numVotes: 1000,
-            //DROP DOWN FOR NUM OF MOVIES
+            filter: {
+                type: "movie",
+                isAdult: false,
+                startAfter: 1950,
+                endBefore: 2020,
+                runtimeMinutes: {
+                    from: 30, 
+                    to: 400
+                },
+                averageRating: {
+                    from: 0.0,
+                    to: 10.0
+                },
+                numVotes: 300,
+                titleIncludes: null,
+                numMovies: 20
+            }
         }
     }
 
     isAdultOnClick() {
         let temp = this.state.isAdultButton;
+        let tempFilter = this.state.filter;
 
         //Setting bgColor of button
         if(temp.bgColor === "orange") {
             temp.bgColor = "white";
+            tempFilter.isAdult = false;
         }else if (temp.bgColor === "white") {
             temp.bgColor = "orange";
+            tempFilter.isAdult = true;
         }
 
         this.setState({isAdultButtons: temp});
+        this.setState({filter: tempFilter});
+        this.props.setFilter(this.state.filter);
     }
 
     genreOnClick(index) {
         let temp = this.state.genreButtons;
+        let tempFilter = this.state.filter;
 
         //Setting bgColor of button
         if(temp[index].bgColor === "orange") {
@@ -65,22 +76,8 @@ export default class SideFilter extends Component {
         }
 
         this.setState({genreButtons: temp});
-    }
-
-    trendingOnClick(index) {
-        let temp = this.state.trendingButtons;
-        console.log(index);
-
-        //Setting bgColor of button
-        if(temp[index].bgColor === "orange") {
-            temp[index].bgColor = "white";
-        }else if (temp[index].bgColor === "white") {
-            temp[index].bgColor = "orange";
-        }
-
-        this.props.setActiveTrending(temp[index].time_window);
-        this.setState({trendingButtons: temp});
-        this.setState({activeTrendingIndex: index});
+        this.setState({filter: tempFilter});
+        this.props.setFilter(this.state.filter);
     }
 
     render() {
@@ -105,17 +102,16 @@ export default class SideFilter extends Component {
                 <div className="year-filter filter-container">
                     <h5>Year</h5>
                     <Slider 
-                        value={[this.state.startAfter, this.state.endBefore]}
+                        value={[this.state.filter.startAfter, this.state.filter.endBefore]}
                         min={1900}
                         max={2020}
                         step={10}
                         onChange={(event, newValue) => {
-                            let startAfter = this.state.startAfter;
-                            let endBefore = this.state.endBefore;
-                            startAfter = newValue[0];
-                            endBefore = newValue[1];
-                            this.setState({startAfter: startAfter});
-                            this.setState({endBefore: endBefore});
+                            let tempFilter = this.state.filter;
+                            tempFilter.startAfter = newValue[0];
+                            tempFilter.endBefore = newValue[1];
+                            this.setState({filter: tempFilter});
+                            this.props.setFilter(this.state.filter);
                         }}
                         valueLabelDisplay="auto"
                         aira-labelledby="range-slider"
@@ -124,15 +120,16 @@ export default class SideFilter extends Component {
                 <div className="runtime-filter filter-container">
                     <h5>Runtime</h5>
                     <Slider 
-                        value={[this.state.runtimeMinutes.from, this.state.runtimeMinutes.to]}
+                        value={[this.state.filter.runtimeMinutes.from, this.state.filter.runtimeMinutes.to]}
                         min={40}
                         max={400}
                         step={20}
                         onChange={(event, newValue) => {
-                            let temp = this.state.runtimeMinutes;
-                            temp.from = newValue[0];
-                            temp.to = newValue[1];
-                            this.setState({runtimeMinutes: temp});
+                            let tempFilter = this.state.filter;
+                            tempFilter.runtimeMinutes.from = newValue[0];
+                            tempFilter.runtimeMinutes.to = newValue[1];
+                            this.setState({filter: tempFilter});
+                            this.props.setFilter(this.state.filter);
                         }}
                         valueLabelDisplay="auto"
                         aira-labelledby="range-slider"
@@ -141,13 +138,14 @@ export default class SideFilter extends Component {
                 <div className="average-rating-filter filter-container">
                     <h5>Average Rating</h5>
                     <Slider 
-                        value={[this.state.averageRating.from, this.state.averageRating.to]}
+                        value={[this.state.filter.averageRating.from, this.state.filter.averageRating.to]}
                         max={10}
                         onChange={(event, newValue) => {
-                            let temp = this.state.averageRating;
-                            temp.from = newValue[0];
-                            temp.to = newValue[1];
-                            this.setState({averageRating: temp});
+                            let tempFilter = this.state.filter;
+                            tempFilter.averageRating.from = newValue[0];
+                            tempFilter.averageRating.to = newValue[1];
+                            this.setState({filter: tempFilter});
+                            this.props.setFilter(this.state.filter);
                         }}
                         valueLabelDisplay="auto"
                         aira-labelledby="range-slider"
