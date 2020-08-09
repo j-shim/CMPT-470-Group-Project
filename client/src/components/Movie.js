@@ -36,8 +36,6 @@ class Movie extends React.Component {
               configData: data.images,
               baseImageURL: data.images.secure_base_url,
             });
-            console.log(data);
-            console.log(this.state.baseImageURL);
           },
           (error) => {
             this.setState({
@@ -47,7 +45,7 @@ class Movie extends React.Component {
           }
       )
 
-      generateMovies(this.props.filters)
+      generateMovies(this.props.filter)
         .then(res => {
           console.log("Filtered movie response: " + JSON.stringify(res));
 
@@ -66,13 +64,15 @@ class Movie extends React.Component {
 
     componentDidUpdate(prevProps) {
       if(prevProps !== this.props) {
+        this.setState({isLoaded: false})
         console.log("Changing filtered list");
-        generateMovies(this.props.filters)
+        generateMovies(this.props.filter)
         .then((res) => {
           console.log("Filtered movie response: " + JSON.stringify(res));
 
           this.setState({
-            generatedMovies: res.data.data,
+            isLoaded: true,
+            generatedMovies: res.data.data
           })
 
           // return user
@@ -108,9 +108,5 @@ class Movie extends React.Component {
       }
     }
 }
-
-// Movie.propTypes = {
-//   // activeTrending: PropTypes.string.isRequired
-// };
 
 export default Movie;
