@@ -15,6 +15,7 @@ import Dashboard from './components/Dashboard'
 import Trending from './components/Trending'
 import UserList from './components/UserList'
 import AddMovie from './components/AddMovie'
+import Alert from './components/Alert'
 
 function axiosInterceptors() {
   // Sets Authorization header to 'Bearer <token>
@@ -47,12 +48,39 @@ class App extends Component {
     super(props)
     axiosInterceptors()
     this.state = {
-      isLoggedIn: false
+      isLoggedIn: false,
+      alerts: {
+        message: '',
+        isSuccess: false,
+        timeoutId: undefined
+      }
     }
   }
 
   setLoggedIn = (isLoggedInOrNot) => {
-    this.setState({ isLoggedIn: isLoggedInOrNot })
+    this.setState({
+      isLoggedIn: isLoggedInOrNot
+    })
+  }
+
+  setAlerts = (newAlert) => {
+    if (typeof this.state.alerts.timeoutId === 'number') {
+      clearTimeout(this.state.alerts.timeoutId)
+    }
+    this.setState({
+      alerts: {
+        message: newAlert.message,
+        isSuccess: newAlert.isSuccess,
+        timeoutId: setTimeout(() => {
+          this.setState({
+            alerts: {
+              message: '',
+              timeoutId: undefined
+            }
+          })
+        }, 10000)
+      }
+    })
   }
 
   render() {
@@ -61,6 +89,7 @@ class App extends Component {
         <MenuBar isLoggedIn={this.state.isLoggedIn} setLoggedIn={this.setLoggedIn} />
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
+        <Alert alerts={this.state.alerts} />
         <Switch>
           <Route exact path="/">
             {this.state.isLoggedIn && <Redirect to="/dashboard" />}
@@ -68,11 +97,11 @@ class App extends Component {
           </Route>
           <Route path="/login">
             {this.state.isLoggedIn && <Redirect to="/dashboard" />}
-            {!this.state.isLoggedIn && <Login setLoggedIn={this.setLoggedIn} />}
+            {!this.state.isLoggedIn && <Login setLoggedIn={this.setLoggedIn} setAlerts={this.setAlerts} />}
           </Route>
           <Route path="/register">
             {this.state.isLoggedIn && <Redirect to="/dashboard" />}
-            {!this.state.isLoggedIn && <Register setLoggedIn={this.setLoggedIn} />}
+            {!this.state.isLoggedIn && <Register setLoggedIn={this.setLoggedIn} setAlerts={this.setAlerts} />}
           </Route>
           <Route path="/dashboard">
             <Dashboard isLoggedIn={this.state.isLoggedIn} />
