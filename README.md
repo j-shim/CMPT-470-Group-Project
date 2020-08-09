@@ -49,7 +49,7 @@ source full/path/to/project/server/scripts/title_with_ratings.sql
 
 ```bash
 npm i knex -g
-cd config
+cd server/config
 knex migrate:latest
 
 # knex migrate:rollback (nuke all tables)
