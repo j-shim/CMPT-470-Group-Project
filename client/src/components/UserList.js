@@ -3,10 +3,15 @@ import { Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Typography from '@material-ui/core/Typography';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import './UserList.scss';
 
 export default class UserList extends Component {
   constructor(props) {
@@ -38,8 +43,9 @@ export default class UserList extends Component {
 
   render() {
     return this.props.isLoggedIn ? (
-      <div>
+      <div className="userlist">
         <h1>Your List:</h1>
+        <div className = "movies-list">
         <List>
           {this.state.usersMovies.map(userMovies => (
             <ListItem alignItems="flex-start">
@@ -48,37 +54,47 @@ export default class UserList extends Component {
               </ListItemAvatar>
               <ListItemText
                 key = {userMovies.title}
-                primary={userMovies.title}
+                primary={
+                  <React.Fragment>
+                    <Typography
+                      component="span"
+                      variant="h3"
+                      color="textPrimary"
+                      
+                    >
+                      {userMovies.title}
+                    </Typography>
+                  </React.Fragment>
+                }
                 secondary={
                   <React.Fragment>
                     <Typography
                       component="span"
-                      variant="body2"
+                      variant="h5"
                       color="textPrimary"
                     >
                       {userMovies.year}
                     </Typography>
-
                   </React.Fragment>
+                  
                 }
               />
-              <Divider variant="inset" component="li" />
+              <ListItemSecondaryAction>
+                <IconButton>
+                  <VisibilityIcon color="disabled" fontSize="large"/>
+                </IconButton>
+                <IconButton>
+                  <FavoriteIcon fontSize="large" />
+                </IconButton>
+                <IconButton>
+                  <DeleteIcon fontSize="large"/>
+                </IconButton>
+              </ListItemSecondaryAction>
             </ListItem>
           ))}    
         
         </List>
-
-        {/* <GridList cellHeight={325} cols={4}>
-              {this.state.trendingMovies.map(trendingMovies => (
-              <GridListTile key={trendingMovies.id}>
-                  <img src = {this.state.baseImageURL.concat('w300',trendingMovies.poster_path)} alt= {trendingMovies.title}></img>
-                  <GridListTileBar
-                    title={trendingMovies.title}
-                    />  
-              </GridListTile>
-              ))}
-              
-        </GridList> */}
+        </div>
         <Link to="/add"><button className="btn btn-primary" >Add Movie</button></Link>
       </div>
     ) : <Redirect to="/login" />
