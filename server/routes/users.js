@@ -39,7 +39,7 @@ function authenticate(req, res, next) {
       hash = resultsJSON[0].hash
       if (bcrypt.compareSync(password, hash)) {
         const token = jwt.sign({
-          sub: resultsJSON[0].id
+          sub: username
         }, config.JWT_SECRET, {
           expiresIn: '1h'
         })
