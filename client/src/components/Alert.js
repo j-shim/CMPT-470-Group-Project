@@ -13,7 +13,7 @@ export default class Alert extends Component {
       if (this.props.alerts.isSuccess) {
         component = (
           <div className="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">
+            <button type="button" className="close" data-dismiss="alert">
               &times;
             </button>
             {this.props.alerts.message}
@@ -22,7 +22,7 @@ export default class Alert extends Component {
       } else {
         component = (
           <div className="alert alert-danger alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">
+            <button type="button" className="close" data-dismiss="alert">
               &times;
             </button>
             {this.props.alerts.message}
