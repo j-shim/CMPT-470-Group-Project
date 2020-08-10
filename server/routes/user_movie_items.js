@@ -39,7 +39,7 @@ function getMovieItems(req, res, next) {
                 qb.select('*')
             }).fetchAll()
             .then(async (results) => {
-                console.log(results.toJSON());
+                // console.log(results.toJSON());
                 return res.status(200).json({
                     data: await movieRenderer(results.toJSON())
                 })
