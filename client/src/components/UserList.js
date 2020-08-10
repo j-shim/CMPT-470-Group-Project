@@ -15,7 +15,8 @@ import axios from 'axios'
 import CONSTANTS from '../constants/constants'
 import './UserList.scss';
 
-const url = CONSTANTS.API_URL + '/user-movie-items/list';
+const geturl = CONSTANTS.API_URL + '/user-movie-items/list';
+const deleteurl = CONSTANTS.API_URL + '/user-movie-items/remove';
 const moviePosterURL = 'https://image.tmdb.org/t/p/w200';
 
 export default class UserList extends Component {
@@ -30,7 +31,7 @@ export default class UserList extends Component {
   }
 
   async componentDidMount(){
-    axios.get(url)
+    axios.get(geturl)
     .then((res) =>{
       console.log(res.data.data);
       this.setState({
@@ -40,8 +41,20 @@ export default class UserList extends Component {
     })
   }
 
-  handleDelete(evt){
+  handleDelete(evt,userMovies){
+    evt.preventDefault();
     console.log("REMOVE");
+    if (this.props.onClick) {
+      this.props.onClick(userMovies);
+    }
+    axios.post(deleteurl)
+    .then((res) =>{
+      console.log(res.data.data);
+      this.setState({
+        isLoaded : true,
+        usersMoviefetch: res.data.data,
+      });
+    })
   }
 
   render() {
@@ -88,8 +101,8 @@ export default class UserList extends Component {
                 <IconButton>
                   <FavoriteIcon fontSize="large" color={userMovies.isFavorite ? "secondary": "disabled"} />
                 </IconButton>
-                <IconButton>
-                  <DeleteIcon fontSize="large" onClick = {this.handleDelete}/>
+                <IconButton onClick={e => this.handleDelete(e, userMovies)}>
+                  <DeleteIcon fontSize="large"/>
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
