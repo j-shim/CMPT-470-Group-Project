@@ -147,8 +147,8 @@ class Movie extends React.Component {
         )
       } else {
         return (
-          <div className="movie-container">
-            <GridList cellHeight={325} cols={5}>
+          <div className="movie-container" style={{width: this.state.width}}>
+            <GridList cellHeight={340} cols={3}>
               {this.state.generatedMovies.map((generatedMovies, index) => (
                 <GridListTile className="flip-card" key={index}>
                   <div class="flip-card-inner">
@@ -160,9 +160,13 @@ class Movie extends React.Component {
                     </div>
                     
                     <div class="flip-card-back">
-                      <h1>John Doe</h1> 
-                      <p>Architect & Engineer</p> 
-                      <p>We love that guy</p>
+                      <p>
+                        Genre: {generatedMovies.genres}
+                      </p> 
+                      <p>Average Rating: {generatedMovies.averageRating}</p> 
+                      <p>Vote: {generatedMovies.numVotes}</p>
+                      <p>Runtime: {generatedMovies.runtimeMinutes} minutes</p>
+                      <button className="add-movie-button buttons">Add to List</button>
                     </div>
                   </div>
                 </GridListTile>
