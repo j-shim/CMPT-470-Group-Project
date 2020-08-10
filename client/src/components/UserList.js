@@ -83,10 +83,10 @@ export default class UserList extends Component {
               />
               <ListItemSecondaryAction>
                 <IconButton>
-                  <VisibilityIcon color="disabled" fontSize="large"/>
+                  <VisibilityIcon fontSize="large" color={userMovies.isWatched ? "primary": "disabled"}/>
                 </IconButton>
                 <IconButton>
-                  <FavoriteIcon fontSize="large" />
+                  <FavoriteIcon fontSize="large" color={userMovies.isFavorite ? "secondary": "disabled"} />
                 </IconButton>
                 <IconButton>
                   <DeleteIcon fontSize="large" onClick = {this.handleDelete}/>
