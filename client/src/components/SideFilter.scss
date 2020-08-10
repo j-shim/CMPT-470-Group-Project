@@ -1,12 +1,14 @@
 $filter-color: rgb(255, 145, 1);
 
 .filter {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
     margin: 15px;
     border: 2px solid;
     border-radius: 20px;
     width: 30%;
-    height: 1525px;
+    // height: 1525px;
 }
 
 .buttons {
