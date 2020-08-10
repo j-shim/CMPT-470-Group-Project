@@ -38,7 +38,7 @@ ul {
 
 .flip-card-back {
   padding: 15px 20px;
-  background-color: white;
+  background-color: #0ad5f0;
   color: black;
   transform: rotateY(180deg);
 }
@@ -47,6 +47,7 @@ ul {
 .dashboard-img {
   display: block;
   position: absolute;
+  padding: 0;
   top: 50%;
   left: 50%;
   min-height: 100%;
@@ -62,11 +63,11 @@ ul {
 }
 
 .imdb-button {
+  background-color: #f3ce13;
   border: 1px solid;
   border-radius: 5px;
   padding: 5px 10px;
   margin: 0 10px;
-  background-color: white;
 }
 
 .imdb-button:hover {

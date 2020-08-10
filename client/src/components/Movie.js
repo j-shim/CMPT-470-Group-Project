@@ -147,7 +147,7 @@ class Movie extends React.Component {
       } else {
         return (
           <div className="movie-container" style={{width: this.state.width}}>
-            <GridList cellHeight={340} cols={3}>
+            <GridList cellHeight={340} cols={5}>
               {this.state.generatedMovies.map((generatedMovies, index) => (
                 <GridListTile className="flip-card" key={index}>
                   <div className="flip-card-inner">
@@ -162,12 +162,13 @@ class Movie extends React.Component {
                       <p>
                         Genre: {generatedMovies.genres}
                       </p> 
+                      <p>Year: {generatedMovies.startYear}</p> 
                       <p>Average Rating: {generatedMovies.averageRating}</p> 
                       <p>Vote: {generatedMovies.numVotes}</p>
                       <p>Runtime: {generatedMovies.runtimeMinutes} minutes</p>
                       <div className="movie-buttons">
                         <a href={"".concat("https://www.imdb.com/title/", generatedMovies.tconst)}>
-                          <button className="imdb-button">IMDb</button>
+                          <button className="imdb-button"><strong>IMDb</strong></button>
                         </a>
                         <button className="add-movie-button">+</button>
                       </div>
