@@ -40,8 +40,10 @@ function getMovieItems(req, res, next) {
             }).fetchAll()
             .then(async (results) => {
                 // console.log(results.toJSON());
+                results = await movieRenderer(results.toJSON());
+
                 return res.status(200).json({
-                    data: await movieRenderer(results.toJSON())
+                    data: results.sort((a, b) => b.averageRating - a.averageRating)
                 })
             }).catch(err => {
                 return next(err);
