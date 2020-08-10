@@ -17,6 +17,7 @@ import './UserList.scss';
 
 const geturl = CONSTANTS.API_URL + '/user-movie-items/list';
 const deleteurl = CONSTANTS.API_URL + '/user-movie-items/remove';
+const updateurl = CONSTANTS.API_URL + '/user-movie-items/update';
 const moviePosterURL = 'https://image.tmdb.org/t/p/w200';
 
 export default class UserList extends Component {
@@ -28,6 +29,8 @@ export default class UserList extends Component {
       usersMoviefetch: [],
     }
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleFavorite = this.handleFavorite.bind(this);
+    this.handleWatched = this.handleWatched.bind(this);
   }
 
   componentDidMount(){
@@ -41,15 +44,58 @@ export default class UserList extends Component {
     })
   }
 
+  refreshList(){
+    axios.get(geturl)
+    .then((res) =>{
+      console.log(res.data.data);
+      this.setState({
+        isLoaded : true,
+        usersMoviefetch: res.data.data,
+      });
+    })
+  }
+
+  handleWatched(evt,userMovies){
+    evt.preventDefault();
+    const options = {
+      headers: { 'Content-Type': 'application/json' }
+    }
+
+    var watch = userMovies.isWatched;
+    Boolean(watch);
+    watch = !watch;
+    console.log(watch);
+    userMovies.isWatched = watch;
+    axios.put(updateurl, userMovies, options);
+
+    this.refreshList();
+  }
+
+  handleFavorite(evt,userMovies){
+    evt.preventDefault();
+
+    const options = {
+      headers: { 'Content-Type': 'application/json' }
+    }
+
+    var fav = userMovies.isFavorite;
+    Boolean(fav);
+    fav = !fav;
+    console.log(fav);
+    userMovies.isFavorite = fav;
+    axios.put(updateurl, userMovies, options);
+
+    this.refreshList();
+  }
+
   handleDelete(evt,userMovies){
     evt.preventDefault();
-    console.log("REMOVE");
 
     console.log(userMovies.tconst);
 
     axios.delete(deleteurl, { data : {tconst: userMovies.tconst}, headers: { 'Content-Type': 'application/json' }})
 
-    this.componentDidMount();
+    this.refreshList();
   }
 
   render() {
@@ -90,10 +136,10 @@ export default class UserList extends Component {
                 }
               />
               <ListItemSecondaryAction>
-                <IconButton>
+                <IconButton onClick={e => this.handleWatched(e, userMovies)}>
                   <VisibilityIcon fontSize="large" color={userMovies.isWatched ? "primary": "disabled"}/>
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={e => this.handleFavorite(e, userMovies)}>
                   <FavoriteIcon fontSize="large" color={userMovies.isFavorite ? "secondary": "disabled"} />
                 </IconButton>
                 <IconButton onClick={e => this.handleDelete(e, userMovies)}>
