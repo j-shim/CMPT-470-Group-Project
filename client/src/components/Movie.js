@@ -151,18 +151,19 @@ class Movie extends React.Component {
             <GridList cellHeight={325} cols={5}>
               {this.state.generatedMovies.map((generatedMovies, index) => (
                 <GridListTile className="flip-card" key={index}>
-                  <div class="flip-card-inner">
-                    <div class="flip-card-front">
+                  <div className="flip-card-inner">
+                    <div className="flip-card-front">
                       <img src={(generatedMovies.posterPath == null) ? require('../img/default-movie-poster.png') : this.state.baseImageURL.concat('w300',generatedMovies.posterPath)} alt= {generatedMovies.primaryTitle}></img>
                       <GridListTileBar
                         title={generatedMovies.primaryTitle}
                       />  
                     </div>
                     
-                    <div class="flip-card-back">
+                    <div className="flip-card-back">
                       <h1>John Doe</h1> 
                       <p>Architect & Engineer</p> 
                       <p>We love that guy</p>
+                      {/* <button style={{float: 'right'}}>Click here</button> */}
                     </div>
                   </div>
                 </GridListTile>

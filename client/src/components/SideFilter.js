@@ -28,10 +28,12 @@ export default class SideFilter extends Component {
                 {name: "War", bgColor: "white"}
             ],
             numMoviesButtons: [
+                {name: 5, bgColor: "white"},
                 {name: 10, bgColor: "white"},
                 {name: 20, bgColor: "white"},
-                {name: 25, bgColor: "white"},
                 {name: 50, bgColor: "white"},
+                {name: 75, bgColor: "white"},
+                {name: 100, bgColor: "white"},
             ],
             filter: {
                 type: "movie",
@@ -44,10 +46,10 @@ export default class SideFilter extends Component {
                 },
                 genres: [],
                 averageRating: {
-                    from: 0.0,
+                    from: 5.0,
                     to: 10.0
                 },
-                numVotes: 500,
+                numVotes: 50,
                 titleIncludes: null,
                 numMovies: 20
             }
@@ -224,7 +226,7 @@ export default class SideFilter extends Component {
                     <Slider 
                         value={[this.state.filter.averageRating.from, this.state.filter.averageRating.to]}
                         max={10}
-                        step={0.5}
+                        step={0.1}
                         marks={[
                             {
                                 value: 0.0,
@@ -261,7 +263,7 @@ export default class SideFilter extends Component {
                     <h5>Minimum Vote Count</h5>
                     <Slider
                         min={0}
-                        max={10000}
+                        max={100000}
                         step={1000}
                         marks={[
                             {
@@ -269,28 +271,32 @@ export default class SideFilter extends Component {
                                 label: '0'
                             },
                             {
-                                value: 1000,
-                                label: '1000'
-                            },
-                            {
-                                value: 2500,
-                                label: '2500'
-                            },
-                            {
-                                value: 5000,
-                                label: '5000'
-                            },
-                            {
                                 value: 10000,
-                                label: '10000'
-                            }
+                                label: '10K'
+                            },
+                            {
+                                value: 20000,
+                                label: '20K'
+                            },
+                            {
+                                value: 50000,
+                                label: '50K'
+                            },
+                            {
+                                value: 75000,
+                                label: '75K'
+                            },
+                            {
+                                value: 100000,
+                                label: '100K+'
+                            },
                         ]}
                         onChange={(event, newValue) => {
                             let tempFilter = this.state.filter;
                             tempFilter.numVotes = newValue;
                             this.setState({filter: tempFilter});
                         }}
-                        defaultValue={this.state.filter.numVotes}
+                        defaultValue={50}
                         valueLabelDisplay="auto"
                         aira-labelledby="discrete-slider"
                     />
