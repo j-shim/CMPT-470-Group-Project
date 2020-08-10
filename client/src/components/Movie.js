@@ -1,5 +1,6 @@
 import React from 'react'
 import { generateMovies } from '../services/FilterService'
+import { generateTrendingMovies } from '../services/TrendingService'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
@@ -43,7 +44,26 @@ class Movie extends React.Component {
           }
       )
 
-      generateMovies(this.props.filter)
+      console.log("trending: " + this.props.trending);
+
+      if(this.props.trending) {
+        generateTrendingMovies()
+          .then(res => {
+              console.log("Trending movie response: " + JSON.stringify(res));
+
+            this.setState({
+              isLoaded: true,
+              generatedMovies: res.data.data,
+            })
+
+            // return user
+          }).catch((err) => {
+            // debugger
+            // console.error(err.response.data.message)
+            console.error(err)
+          })
+      }else {
+        generateMovies(this.props.filter)
         .then(res => {
           console.log("Filtered movie response: " + JSON.stringify(res));
 
@@ -58,6 +78,7 @@ class Movie extends React.Component {
           // console.error(err.response.data.message)
           console.error(err)
         })
+      }
     }
 
     componentDidUpdate(prevProps) {
@@ -95,15 +116,26 @@ class Movie extends React.Component {
       } else {
         return (
           <div className="movie-container">
-            <GridList cellHeight={325} cols={4}>
+            <GridList cellHeight={325} cols={3}>
               {this.state.generatedMovies.map((generatedMovies, index) => (
-              <GridListTile key={index}>
-                  <img src = {(generatedMovies.posterPath == null) ? require('../img/default-movie-poster.png') : this.state.baseImageURL.concat('w300',generatedMovies.posterPath)} alt= {generatedMovies.primaryTitle}></img>
-                  <GridListTileBar
-                    title={generatedMovies.primaryTitle}
-                    />  
-              </GridListTile>
-              ))}
+                <GridListTile className="movie-tile" key={index}>
+                  {/* <div className="card-flip">
+                    <div className="card-front">
+                      <div className="card-body"> */}
+                        <img src={(generatedMovies.posterPath == null) ? require('../img/default-movie-poster.png') : this.state.baseImageURL.concat('w300',generatedMovies.posterPath)} alt= {generatedMovies.primaryTitle}></img>
+                        <GridListTileBar
+                          title={generatedMovies.primaryTitle}
+                          />  
+                      {/* </div>
+                    </div>
+                    <div className="card-back">
+                      <div className="card-body">
+                        <p>Genres</p>
+                      </div>
+                    </div>
+                  </div> */}
+                </GridListTile>
+                ))}
             </GridList>
           </div>
         );
