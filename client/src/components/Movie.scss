@@ -3,19 +3,17 @@ ul {
 }
 
 .movie-container {
-  width: 60%;
+  // width: 60%;
 }
 
 .movie-tile {
   transition: 0.5s;
 }
 
-.movie-tile:hover {
-  transform: rotateY(180deg);
-  visibility: hidden;
-}
-
-.movie-tile
+// .movie-tile:hover {
+//   transform: rotateY(180deg);
+//   visibility: hidden;
+// }
 
 // .movie-tile:hover .movie-tile-inner {
 //   transform: rotateY(180deg);

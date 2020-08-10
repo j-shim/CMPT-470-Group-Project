@@ -39,7 +39,7 @@ export default class Dashboard extends Component {
         <h1 style={{"padding": "10px"}}>This is the Dashboard - Find your movie here</h1>
         <div className="dashboard-container">
           <SideFilter setFilter={this.setFilter}/>
-          <Movie filter={this.state.filter}/>
+          <Movie type="dashboard" filter={this.state.filter}/>
         </div>
       </div>
     ) : <Redirect to="/login" />
