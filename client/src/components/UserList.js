@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -99,60 +98,69 @@ export default class UserList extends Component {
   }
 
   render() {
-    return this.props.isLoggedIn ? (
-      <div className="userlist">
-        <h1>Your List:</h1>
-        <div className = "movies-list">
-        <List>
-          {this.state.usersMoviefetch.map(userMovies => (
-            <ListItem alignItems="flex-start" key = {userMovies.id}>
-              <ListItemAvatar>
-                {/* <img src ={moviePosterURL.concat(userMovies.posterPath)} alt = "movie-posters"></img> */}
-              </ListItemAvatar>
-              <ListItemText
-                primary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="h4"
-                      color="textPrimary"
-                      
-                    >
-                      {userMovies.originalTitle}
-                    </Typography>
-                  </React.Fragment>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="h5"
-                      color="textPrimary"
-                    >
-                      {userMovies.startYear}
-                    </Typography>
-                  </React.Fragment>
-                  
-                }
-              />
-              <ListItemSecondaryAction>
-                <IconButton onClick={e => this.handleWatched(e, userMovies)}>
-                  <VisibilityIcon fontSize="large" color={userMovies.isWatched ? "primary": "disabled"}/>
-                </IconButton>
-                <IconButton onClick={e => this.handleFavorite(e, userMovies)}>
-                  <FavoriteIcon fontSize="large" color={userMovies.isFavorite ? "secondary": "disabled"} />
-                </IconButton>
-                <IconButton onClick={e => this.handleDelete(e, userMovies)}>
-                  <DeleteIcon fontSize="large"/>
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}    
-        
-        </List>
+    if (!this.state.isLoaded){
+      return this.props.isLoggedIn ?(
+        <div className="spinner-border text-dark" id ="loading" role="status">
+            <span className="sr-only">Loading...</span>
         </div>
-        <Link to="/add"><button className="btn btn-primary" >Add Movie</button></Link>
-      </div>
-    ) : <Redirect to="/login" />
+      ): <Redirect to="/login" />
+    }else{
+      return this.props.isLoggedIn ? (
+        <div className="userlist">
+          <h1>Your List:</h1>
+          <div className = "movies-list">
+          <List>
+            {this.state.usersMoviefetch.map(userMovies => (
+              <ListItem alignItems="flex-start" key = {userMovies.id}>
+                <ListItemAvatar>
+                  <img alt="movie-posters" src ={moviePosterURL.concat(userMovies.posterPath)} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        variant="h5"
+                        color="textPrimary"
+                        
+                      >
+                        {userMovies.originalTitle}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        variant="h6"
+                        color="textPrimary"
+                      >
+                        {userMovies.startYear}
+                      </Typography>
+                      <br></br>
+                      {userMovies.genres}
+                    </React.Fragment>
+                    
+                  }
+                />
+                <ListItemSecondaryAction>
+                  <IconButton title="Watched/Not Watched"onClick={e => this.handleWatched(e, userMovies)}>
+                    <VisibilityIcon fontSize="large" color={userMovies.isWatched ? "primary": "disabled"}/>
+                  </IconButton>
+                  <IconButton title = "Favorite" onClick={e => this.handleFavorite(e, userMovies)}>
+                    <FavoriteIcon fontSize="large" color={userMovies.isFavorite ? "secondary": "disabled"} />
+                  </IconButton>
+                  <IconButton title="Remove" onClick={e => this.handleDelete(e, userMovies)}>
+                    <DeleteIcon fontSize="large"/>
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}    
+          
+          </List>
+          </div>
+        </div>
+      ) : <Redirect to="/login" />
+    }
   }
 }
