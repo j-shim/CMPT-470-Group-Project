@@ -66,6 +66,10 @@ function generateMovies(req, res, next) {
     })
     .fetchAll()
     .then(async (results) => {
+      if (numMovies > results.length) {
+        numMovies = results.length
+      }
+
       //Generate movies
       const random = uniqueRandomArray(results.toJSON());
 
