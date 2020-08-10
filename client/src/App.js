@@ -13,8 +13,11 @@ import Login from './components/Login'
 import Register from './components/Register'
 import Dashboard from './components/Dashboard'
 import Trending from './components/Trending'
+import MostWatched from './components/MostWatched'
+import MostFavorite from './components/MostFavorite'
 import UserList from './components/UserList'
 import AddMovie from './components/AddMovie'
+
 
 function axiosInterceptors() {
   // Sets Authorization header to 'Bearer <token>
