@@ -289,12 +289,21 @@ export default class SideFilter extends Component {
                             tempFilter.numVotes = newValue;
                             this.setState({filter: tempFilter});
                         }}
+                        defaultValue={this.state.filter.numVotes}
+                        valueLabelDisplay="auto"
                         aira-labelledby="discrete-slider"
                     />
                 </div>
                 <div className="title-includes-filter filter-container">
                     <h5>Title Includes </h5>
-                    <p>Add textfield to search</p>
+                    <input type="text" value={(this.state.filter.titleIncludes == null)?'':this.state.filter.titleIncludes} onChange={
+                        (event) => {
+                            let tempFilter = this.state.filter;
+                            tempFilter.titleIncludes = event.target.value;
+                            console.log("Title includes: " + tempFilter.titleIncludes);
+                            this.setState({filter: tempFilter});
+                        }
+                    } />
                 </div>
                 <div className="num-movies-filter filter-container">
                     <h5>Number Of Movies Shown</h5>
@@ -304,7 +313,9 @@ export default class SideFilter extends Component {
                         </button>
                     )}
                 </div>
-                <button className="buttons submit" onClick={() => this.filterOnClick()}>Search</button>
+                <div style={{textAlign: "center"}}>
+                    <button className="submit" onClick={() => this.filterOnClick()}>Search</button>
+                </div>
             </div>
         )
     }
