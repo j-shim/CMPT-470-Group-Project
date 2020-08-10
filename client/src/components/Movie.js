@@ -153,7 +153,7 @@ class Movie extends React.Component {
                 <GridListTile className="flip-card" key={index}>
                   <div className="flip-card-inner">
                     <div className="flip-card-front">
-                      <img src={(generatedMovies.posterPath == null) ? require('../img/default-movie-poster.png') : this.state.baseImageURL.concat('w300',generatedMovies.posterPath)} alt= {generatedMovies.primaryTitle}></img>
+                      <img className="dashboard-img" src={(generatedMovies.posterPath == null) ? require('../img/default-movie-poster.png') : this.state.baseImageURL.concat('w300',generatedMovies.posterPath)} alt= {generatedMovies.primaryTitle}></img>
                       <GridListTileBar
                         title={generatedMovies.primaryTitle}
                       />  
