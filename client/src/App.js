@@ -50,12 +50,17 @@ class App extends Component {
     super(props)
     axiosInterceptors()
     this.state = {
-      isLoggedIn: false
+      isLoggedIn: localStorage.getItem('470isLoggedIn') !== null
     }
   }
 
-  setLoggedIn = (isLoggedInOrNot) => {
-    this.setState({ isLoggedIn: isLoggedInOrNot })
+  setLoggedIn = (isLoggedIn) => {
+    this.setState({ isLoggedIn })
+    if (isLoggedIn) {
+      localStorage.setItem('470isLoggedIn', 'true')
+    } else {
+      localStorage.setItem('470isLoggedIn', null)
+    }
   }
 
   render() {

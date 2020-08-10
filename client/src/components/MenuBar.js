@@ -26,7 +26,7 @@ export default class MenuBar extends Component {
               <li className="nav-item">
                 {this.props.isLoggedIn ?
                   <NavLink to="/dashboard" activeClassName="active" className="nav-link">Dashboard</NavLink>
-                  : <span style={{color: 'white'}}>Welcome to Movie Website</span>}
+                  : <span style={{color: 'white'}}>Welcome to Movie Database</span>}
               </li>
               <li className="nav-item">
                 {this.props.isLoggedIn ?

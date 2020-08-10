@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const pickRandom = require("pick-random");
 const movieRenderer = require("../helpers/movieRenderer");
 
 const MovieTitle = require("../models/movieTitle");
@@ -27,61 +26,38 @@ function generateMovies(req, res, next) {
   } = req.body;
 
   MovieTitle.query((qb) => {
-    qb.where("titleType", type);
-    if (!isAdult) qb.where("isAdult", isAdult);
+      qb.where("titleType", type);
+      if (!isAdult) qb.where("isAdult", isAdult);
 
-    if (type === "tvSeries") {
-      if (startAfter) {
-        qb.where(() => {
-          qb.where("startYear", ">=", startAfter);
-          qb.orWhereNull("startYear");
-        });
+      if (startAfter) qb.where("startYear", ">=", startAfter);
+      if (endBefore) qb.where("startYear", "<=", endBefore);
+
+      if (type === "movie") {
+
+        if (runtimeMinutes.from)
+          qb.where("runtimeMinutes", ">=", runtimeMinutes.from);
+        if (runtimeMinutes.to)
+          qb.where("runtimeMinutes", "<=", runtimeMinutes.to);
       }
 
-      if (endBefore) {
-        qb.where(() => {
-          qb.where("endYear", "<=", endBefore);
-          qb.orWhereNull("endYear");
-        });
+      for (genre of genres) {
+        qb.where("genres", "like", "%" + genre + "%");
       }
-    }
 
-    if (type === "movie") {
-      qb.where("startYear", ">=", startAfter);
-      qb.where("startYear", "<=", endBefore);
+      if (averageRating.from) qb.where("averageRating", ">=", averageRating.from);
+      if (averageRating.to) qb.where("averageRating", "<=", averageRating.to);
 
-      if (runtimeMinutes.from)
-        qb.where("runtimeMinutes", ">=", runtimeMinutes.from);
-      if (runtimeMinutes.to)
-        qb.where("runtimeMinutes", "<=", runtimeMinutes.to);
-    }
+      if (numVotes) qb.where("numVotes", ">=", numVotes);
+      if (titleIncludes)
+        qb.where("primaryTitle", "like", "%" + titleIncludes + "%");
 
-    for (genre of genres) {
-      qb.where("genres", "like", "%" + genre + "%");
-    }
-
-    if (averageRating.from) qb.where("averageRating", ">=", averageRating.from);
-    if (averageRating.to) qb.where("averageRating", "<=", averageRating.to);
-
-    if (numVotes) qb.where("numVotes", ">=", numVotes);
-    if (titleIncludes)
-      qb.where("primaryTitle", "like", "%" + titleIncludes + "%");
-  })
+      qb.orderByRaw('rand()')
+      qb.limit(numMovies);
+    })
     .fetchAll()
     .then(async (results) => {
-      if (numMovies > results.length) {
-        numMovies = results.length;
-      }
-
-      let randomMovies = pickRandom(results.toJSON(), {
-        count: numMovies,
-      });
-      randomMovies = await movieRenderer(randomMovies);
-
-      // console.log(randomMovies);
-
       return res.status(200).json({
-        data: randomMovies,
+        data: await movieRenderer(results.toJSON()),
       });
     })
     .catch((err) => {

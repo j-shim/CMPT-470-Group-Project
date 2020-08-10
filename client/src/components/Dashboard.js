@@ -19,10 +19,10 @@ export default class Dashboard extends Component {
         },
         genres: [],
         averageRating: {
-          from: 0.0,
+          from: 5.0,
           to: 10.0
         },
-        numVotes: 1000,
+        numVotes: 50,
         titleIncludes: null,
         numMovies: 20
       }
@@ -36,7 +36,7 @@ export default class Dashboard extends Component {
   render() {
     return this.props.isLoggedIn ? (
       <div>
-        <h1 style={{"padding": "10px"}}>This is the Dashboard - Find your movie here</h1>
+        <h1 style={{"padding": "10px"}}>Random Movie Generator</h1>
         <div className="dashboard-container">
           <SideFilter setFilter={this.setFilter}/>
           <Movie type="dashboard" filter={this.state.filter}/>
