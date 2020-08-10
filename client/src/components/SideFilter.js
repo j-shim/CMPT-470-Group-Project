@@ -103,6 +103,8 @@ export default class SideFilter extends Component {
     }
 
     filterOnClick() {
+        console.log("Clicked on Search");
+        console.log("This is the filter we searching: " + JSON.stringify(this.state.filter));
         this.props.setFilter(this.state.filter);
     }
 

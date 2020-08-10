@@ -1,6 +1,8 @@
 import React from 'react'
 import { generateMovies } from '../services/FilterService'
 import { generateTrendingMovies } from '../services/TrendingService'
+import { generateMostWatchedMovies } from '../services/MostWatchedService'
+import { generateMostFavoriteMovies } from '../services/MostFavoriteService'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
@@ -19,6 +21,7 @@ class Movie extends React.Component {
           generatedMovies: [],
           baseImageURL: null,
           configData: null,
+          width: "100%"
         };
     }
 
@@ -44,31 +47,61 @@ class Movie extends React.Component {
           }
       )
 
-      console.log("trending: " + this.props.trending);
-
-      if(this.props.trending) {
-        generateTrendingMovies()
-          .then(res => {
-              console.log("Trending movie response: " + JSON.stringify(res));
-
-            this.setState({
-              isLoaded: true,
-              generatedMovies: res.data.data,
-            })
-
-            // return user
-          }).catch((err) => {
-            // debugger
-            // console.error(err.response.data.message)
-            console.error(err)
-          })
-      }else {
+      if (this.props.type === "dashboard") {
         generateMovies(this.props.filter)
         .then(res => {
-          console.log("Filtered movie response: " + JSON.stringify(res));
 
           this.setState({
             isLoaded: true,
+            width: "60%",
+            generatedMovies: res.data.data,
+          })
+
+          // return user
+        }).catch((err) => {
+          // debugger
+          // console.error(err.response.data.message)
+          console.error(err)
+        })
+      }else if (this.props.type === "trending") {
+        generateTrendingMovies()
+        .then(res => {
+
+          this.setState({
+            isLoaded: true,
+            width: "100%",
+            generatedMovies: res.data.data,
+          })
+
+          // return user
+        }).catch((err) => {
+          // debugger
+          // console.error(err.response.data.message)
+          console.error(err)
+        })
+      }else if (this.props.type === "most-watched") {
+        generateMostWatchedMovies()
+        .then(res => {
+
+          this.setState({
+            isLoaded: true,
+            width: "100%",
+            generatedMovies: res.data.data,
+          })
+
+          // return user
+        }).catch((err) => {
+          // debugger
+          // console.error(err.response.data.message)
+          console.error(err)
+        })
+      }else if (this.props.type === "most-favorite") {
+        generateMostFavoriteMovies()
+        .then(res => {
+
+          this.setState({
+            isLoaded: true,
+            width: "100%",
             generatedMovies: res.data.data,
           })
 
@@ -84,7 +117,6 @@ class Movie extends React.Component {
     componentDidUpdate(prevProps) {
       if(prevProps !== this.props) {
         this.setState({isLoaded: false})
-        console.log("Changing filtered list in did update");
         generateMovies(this.props.filter)
         .then((res) => {
           console.log("Filtered movie response: " + JSON.stringify(res));
@@ -115,8 +147,8 @@ class Movie extends React.Component {
         )
       } else {
         return (
-          <div className="movie-container">
-            <GridList cellHeight={325} cols={3}>
+          <div className="movie-container" style={{width: this.state.width}}>
+            <GridList cellHeight={340} cols={3}>
               {this.state.generatedMovies.map((generatedMovies, index) => (
                 <GridListTile className="movie-tile" key={index}>
                   {/* <div className="card-flip">

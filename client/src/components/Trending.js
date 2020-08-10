@@ -4,20 +4,12 @@ import Movie from './Movie'
 import './Trending.scss'
 
 export default class Trending extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    }
-
     render() {
         return this.props.isLoggedIn ? (
             <div className="trending-container">
                 <h2>Trending List</h2>
-                <Movie trending={true}/>
+                <Movie type="trending" />
             </div>
         ) : <Redirect to="/login" />
     }
-
-
 }
