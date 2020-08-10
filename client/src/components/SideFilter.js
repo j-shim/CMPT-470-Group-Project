@@ -103,7 +103,6 @@ export default class SideFilter extends Component {
     }
 
     filterOnClick() {
-        console.log("Filter onClick");
         this.props.setFilter(this.state.filter);
     }
 
