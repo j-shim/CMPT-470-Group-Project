@@ -80,6 +80,12 @@ class App extends Component {
           <Route path="/trending">
             <Trending isLoggedIn={this.state.isLoggedIn} />
           </Route>
+          <Route path="/most-watched">
+            <MostWatched isLoggedIn={this.state.isLoggedIn} />
+          </Route>
+          <Route path="/most-favorite">
+            <MostFavorite isLoggedIn={this.state.isLoggedIn} />
+          </Route>
           <Route path="/list">
             <UserList isLoggedIn={this.state.isLoggedIn} />
           </Route>

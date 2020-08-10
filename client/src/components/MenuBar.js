@@ -33,6 +33,16 @@ export default class MenuBar extends Component {
                   <NavLink to="/trending" activeClassName="active" className="nav-link">Trending</NavLink>
                   : <span></span>}
               </li>
+              <li className="nav-item">
+                {this.props.isLoggedIn ?
+                  <NavLink to="/most-watched" activeClassName="active" className="nav-link">Most Watched</NavLink>
+                  : <span></span>}
+              </li>
+              <li className="nav-item">
+                {this.props.isLoggedIn ?
+                  <NavLink to="/most-favorite" activeClassName="active" className="nav-link">Most Favorite</NavLink>
+                  : <span></span>}
+              </li>
             </ul>
             <ul className="navbar-nav">
               <li className="nav-item">
