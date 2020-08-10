@@ -11,6 +11,7 @@ import CONSTANTS from './constants/constants'
 import MenuBar from './components/MenuBar'
 import Login from './components/Login'
 import Register from './components/Register'
+import EditProfile from './components/EditProfile'
 import Dashboard from './components/Dashboard'
 import Trending from './components/Trending'
 import MostWatched from './components/MostWatched'
@@ -81,6 +82,10 @@ class App extends Component {
           <Route path="/register">
             {this.state.isLoggedIn && <Redirect to="/dashboard" />}
             {!this.state.isLoggedIn && <Register setLoggedIn={this.setLoggedIn} />}
+          </Route>
+          <Route path="/edit-profile">
+            {this.state.isLoggedIn && <EditProfile />}
+            {!this.state.isLoggedIn && <Redirect to="/login" />}
           </Route>
           <Route path="/dashboard">
             <Dashboard isLoggedIn={this.state.isLoggedIn} />

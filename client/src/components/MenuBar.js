@@ -26,7 +26,7 @@ export default class MenuBar extends Component {
               <li className="nav-item">
                 {this.props.isLoggedIn ?
                   <NavLink to="/dashboard" activeClassName="active" className="nav-link">Dashboard</NavLink>
-                  : <span style={{color: 'white'}}>Welcome to Movie Database</span>}
+                  : <span style={{ color: 'white' }}>Welcome to Movie Database</span>}
               </li>
               <li className="nav-item">
                 {this.props.isLoggedIn ?
@@ -48,19 +48,19 @@ export default class MenuBar extends Component {
               <li className="nav-item">
                 {this.props.isLoggedIn ?
                   <div className="dropdown">
-                    <button style={{color: 'white'}} className="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button style={{ color: 'white' }} className="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       My Account
                     </button>
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <NavLink style={{backgroundColor: 'white', color: 'black'}} to="/list" activeClassName="active" className="dropdown-item">My List</NavLink>
-                      <NavLink style={{backgroundColor: 'white', color: 'black'}} to="/dashboard" activeClassName="active" className="dropdown-item">Edit Profile</NavLink>
-                      <span onClick={this.logout} style={{cursor: 'pointer'}} className="dropdown-item">Logout</span>
+                      <NavLink style={{ backgroundColor: 'white', color: 'black' }} to="/list" activeClassName="active" className="dropdown-item">My List</NavLink>
+                      <NavLink style={{ backgroundColor: 'white', color: 'black' }} to="/edit-profile" activeClassName="active" className="dropdown-item">Edit Profile</NavLink>
+                      <span onClick={this.logout} style={{ cursor: 'pointer' }} className="dropdown-item">Logout</span>
 
                     </div>
                   </div>
                   : <NavLink to="/login" activeClassName="active" className="nav-link">Login</NavLink>}
               </li>
-    
+
               <li className="nav-item">
                 {this.props.isLoggedIn ?
                   <span></span>

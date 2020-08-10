@@ -4,7 +4,9 @@ import CONSTANTS from '../constants/constants'
 
 export default {
   login,
-  register
+  register,
+  getCurrentUser,
+  editProfile
 }
 
 function login(payload) {
@@ -25,6 +27,28 @@ function register(payload) {
     }
   }
   const url = CONSTANTS.API_URL + '/users/register'
+
+  return axios.post(url, payload, options)
+}
+
+function getCurrentUser() {
+  const options = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  const url = CONSTANTS.API_URL + '/users/current-user'
+
+  return axios.post(url, {}, options)
+}
+
+function editProfile(payload) {
+  const options = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  const url = CONSTANTS.API_URL + '/users/edit-profile'
 
   return axios.post(url, payload, options)
 }
