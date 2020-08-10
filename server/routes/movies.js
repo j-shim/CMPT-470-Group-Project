@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const uniqueRandomArray = require("unique-random-array");
+const pickRandom = require("pick-random");
 const movieRenderer = require("../helpers/movieRenderer");
 
 const MovieTitle = require("../models/movieTitle");
@@ -11,7 +11,7 @@ router.post("/generate", generateMovies);
 module.exports = router;
 
 function generateMovies(req, res, next) {
-  console.log(req.body);
+  // console.log(req.body);
 
   let {
     type,
@@ -23,67 +23,60 @@ function generateMovies(req, res, next) {
     averageRating,
     numVotes,
     titleIncludes,
-    numMovies
+    numMovies,
   } = req.body;
 
   MovieTitle.query((qb) => {
-      qb.where("titleType", type);
-      if (!isAdult) qb.where("isAdult", isAdult);
+    qb.where("titleType", type);
+    if (!isAdult) qb.where("isAdult", isAdult);
 
-      if (type === 'tvSeries') {
-        if (startAfter) {
-          qb.where(() => {
-            qb.where("startYear", ">=", startAfter);
-            qb.orWhereNull("startYear");
-          });
-        }
-
-        if (endBefore) {
-          qb.where(() => {
-            qb.where("endYear", "<=", endBefore);
-            qb.orWhereNull("endYear");
-          });
-        }
+    if (type === "tvSeries") {
+      if (startAfter) {
+        qb.where(() => {
+          qb.where("startYear", ">=", startAfter);
+          qb.orWhereNull("startYear");
+        });
       }
 
-      if (type === 'movie') {
-        qb.where('startYear', '>=', startAfter);
-        qb.where('startYear', '<=', endBefore);
-
-        if (runtimeMinutes.from)
-          qb.where("runtimeMinutes", ">=", runtimeMinutes.from);
-        if (runtimeMinutes.to)
-          qb.where("runtimeMinutes", "<=", runtimeMinutes.to);
+      if (endBefore) {
+        qb.where(() => {
+          qb.where("endYear", "<=", endBefore);
+          qb.orWhereNull("endYear");
+        });
       }
+    }
 
-      for (genre of genres) {
-        qb.where("genres", "like", "%" + genre + "%");
-      }
+    if (type === "movie") {
+      qb.where("startYear", ">=", startAfter);
+      qb.where("startYear", "<=", endBefore);
 
-      if (averageRating.from)
-        qb.where("averageRating", ">=", averageRating.from);
-      if (averageRating.to)
-        qb.where("averageRating", "<=", averageRating.to);
+      if (runtimeMinutes.from)
+        qb.where("runtimeMinutes", ">=", runtimeMinutes.from);
+      if (runtimeMinutes.to)
+        qb.where("runtimeMinutes", "<=", runtimeMinutes.to);
+    }
 
-      if (numVotes) qb.where("numVotes", ">=", numVotes);
-      if (titleIncludes)
-        qb.where("primaryTitle", "like", "%" + titleIncludes + "%");
-    })
+    for (genre of genres) {
+      qb.where("genres", "like", "%" + genre + "%");
+    }
+
+    if (averageRating.from) qb.where("averageRating", ">=", averageRating.from);
+    if (averageRating.to) qb.where("averageRating", "<=", averageRating.to);
+
+    if (numVotes) qb.where("numVotes", ">=", numVotes);
+    if (titleIncludes)
+      qb.where("primaryTitle", "like", "%" + titleIncludes + "%");
+  })
     .fetchAll()
     .then(async (results) => {
-      let randomMovies = [];
-      if (numMovies >= results.length) {
-        randomMovies = await movieRenderer(results.toJSON());
-      } else {
-        //Generate movies
-        const random = uniqueRandomArray(results.toJSON());
-
-        for (i = 0; i < numMovies; i++) {
-          randomMovies.push(random());
-        }
-
-        randomMovies = await movieRenderer(randomMovies);
+      if (numMovies > results.length) {
+        numMovies = results.length;
       }
+
+      let randomMovies = pickRandom(results.toJSON(), {
+        count: numMovies,
+      });
+      randomMovies = await movieRenderer(randomMovies);
 
       // console.log(randomMovies);
 
