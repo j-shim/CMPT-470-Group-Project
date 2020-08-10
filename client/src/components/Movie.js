@@ -147,25 +147,24 @@ class Movie extends React.Component {
         )
       } else {
         return (
-          <div className="movie-container" style={{width: this.state.width}}>
-            <GridList cellHeight={340} cols={3}>
+          <div className="movie-container">
+            <GridList cellHeight={325} cols={5}>
               {this.state.generatedMovies.map((generatedMovies, index) => (
-                <GridListTile className="movie-tile" key={index}>
-                  {/* <div className="card-flip">
-                    <div className="card-front">
-                      <div className="card-body"> */}
-                        <img src={(generatedMovies.posterPath == null) ? require('../img/default-movie-poster.png') : this.state.baseImageURL.concat('w300',generatedMovies.posterPath)} alt= {generatedMovies.primaryTitle}></img>
-                        <GridListTileBar
-                          title={generatedMovies.primaryTitle}
-                          />  
-                      {/* </div>
+                <GridListTile className="flip-card" key={index}>
+                  <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                      <img src={(generatedMovies.posterPath == null) ? require('../img/default-movie-poster.png') : this.state.baseImageURL.concat('w300',generatedMovies.posterPath)} alt= {generatedMovies.primaryTitle}></img>
+                      <GridListTileBar
+                        title={generatedMovies.primaryTitle}
+                      />  
                     </div>
-                    <div className="card-back">
-                      <div className="card-body">
-                        <p>Genres</p>
-                      </div>
+                    
+                    <div class="flip-card-back">
+                      <h1>John Doe</h1> 
+                      <p>Architect & Engineer</p> 
+                      <p>We love that guy</p>
                     </div>
-                  </div> */}
+                  </div>
                 </GridListTile>
                 ))}
             </GridList>
