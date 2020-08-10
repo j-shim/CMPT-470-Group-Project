@@ -36,9 +36,11 @@ export default class Login extends Component {
 
         // return user
       }).catch((err) => {
-        // debugger
-        // console.error(err.response.data.message)
-        console.error(err)
+        if (err && err.response && err.response.data) {
+          console.error(err.response.data.message)
+        } else {
+          console.error(err)
+        }
       })
 
   }

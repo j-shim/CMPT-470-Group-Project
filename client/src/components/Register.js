@@ -52,14 +52,18 @@ export default class Register extends Component {
 
             // return user
           }).catch((err) => {
-            // debugger
-            // console.error(err.response.data.message)
-            console.error(err)
+            if (err && err.response && err.response.data) {
+              console.error(err.response.data.message)
+            } else {
+              console.error(err)
+            }
           })
       }).catch((err) => {
-        // debugger
-        // console.error(err.response.data.message)
-        console.error(err)
+        if (err && err.response && err.response.data) {
+          console.error(err.response.data.message)
+        } else {
+          console.error(err)
+        }
       })
 
   }
