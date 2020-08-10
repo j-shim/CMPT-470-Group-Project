@@ -171,7 +171,7 @@ export default class SideFilter extends Component {
                                 label: '2020'
                             }
                         ]}
-                        step={10}
+                        step={1}
                         onChange={(event, newValue) => {
                             let tempFilter = this.state.filter;
                             tempFilter.startAfter = newValue[0];
