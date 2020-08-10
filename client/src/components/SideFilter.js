@@ -23,7 +23,7 @@ export default class SideFilter extends Component {
                 {name: "Horror", bgColor: "white"},
                 {name: "Mystery", bgColor: "white"},
                 {name: "Romance", bgColor: "white"},
-                {name: "Science Fiction", bgColor: "white"},
+                {name: "Sci-Fi", bgColor: "white"},
                 {name: "Thriller", bgColor: "white"},
                 {name: "War", bgColor: "white"}
             ],
@@ -103,6 +103,7 @@ export default class SideFilter extends Component {
     }
 
     filterOnClick() {
+        console.log("Filter onClick");
         this.props.setFilter(this.state.filter);
     }
 
@@ -131,7 +132,7 @@ export default class SideFilter extends Component {
                             this.setState({filter: tempFilter});
                         }}>
                             <FormControlLabel value="movie" control={<Radio />} label="Movie" />
-                            <FormControlLabel value="tv-series" control={<Radio />} label="TV Series" />
+                            <FormControlLabel value="tvSeries" control={<Radio />} label="TV Series" />
                         </RadioGroup>
                     </FormControl>
                 </div>
@@ -256,31 +257,31 @@ export default class SideFilter extends Component {
                     />
                 </div>
                 <div className="num-votes-filter filter-container">
-                    <h5>Number of Votes</h5>
+                    <h5>Minimum Vote Count</h5>
                     <Slider
                         min={0}
-                        max={2000}
-                        step={250}
+                        max={10000}
+                        step={1000}
                         marks={[
                             {
                                 value: 0,
                                 label: '0'
                             },
                             {
-                                value: 250,
-                                label: '250+'
-                            },
-                            {
-                                value: 500,
-                                label: '500+'
-                            },
-                            {
                                 value: 1000,
-                                label: '1000+'
+                                label: '1000'
                             },
                             {
-                                value: 2000,
-                                label: '2000+'
+                                value: 2500,
+                                label: '2500'
+                            },
+                            {
+                                value: 5000,
+                                label: '5000'
+                            },
+                            {
+                                value: 10000,
+                                label: '10000'
                             }
                         ]}
                         onChange={(event, newValue) => {
