@@ -30,25 +30,10 @@ function generateMovies(req, res, next) {
     qb.where("titleType", type);
     if (!isAdult) qb.where("isAdult", isAdult);
 
-    if (type === "tvSeries") {
-      if (startAfter) {
-        qb.where(() => {
-          qb.where("startYear", ">=", startAfter);
-          qb.orWhereNull("startYear");
-        });
-      }
-
-      if (endBefore) {
-        qb.where(() => {
-          qb.where("endYear", "<=", endBefore);
-          qb.orWhereNull("endYear");
-        });
-      }
-    }
+    if (startAfter) qb.where("startYear", ">=", startAfter);
+    if (endBefore) qb.where("startYear", "<=", endBefore);
 
     if (type === "movie") {
-      qb.where("startYear", ">=", startAfter);
-      qb.where("startYear", "<=", endBefore);
 
       if (runtimeMinutes.from)
         qb.where("runtimeMinutes", ">=", runtimeMinutes.from);
