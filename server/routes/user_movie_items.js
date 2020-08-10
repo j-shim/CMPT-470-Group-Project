@@ -16,7 +16,6 @@ router.put('/update', updateMovieItem);
 
 module.exports = router;
 
-
 async function getUserIdFromUsername(username) {
     const result = await User.query(qb => {
         qb.where('username', username)

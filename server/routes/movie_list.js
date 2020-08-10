@@ -38,7 +38,6 @@ function getTrending(res, req, next) {
         //     data: await movieRenderer(results.toJSON())
         // })
     })
-
 }
 
 function getMostWatched(res, req, next) {
