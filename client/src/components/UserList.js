@@ -30,7 +30,7 @@ export default class UserList extends Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  async componentDidMount(){
+  componentDidMount(){
     axios.get(geturl)
     .then((res) =>{
       console.log(res.data.data);
@@ -44,17 +44,12 @@ export default class UserList extends Component {
   handleDelete(evt,userMovies){
     evt.preventDefault();
     console.log("REMOVE");
-    if (this.props.onClick) {
-      this.props.onClick(userMovies);
-    }
-    axios.post(deleteurl)
-    .then((res) =>{
-      console.log(res.data.data);
-      this.setState({
-        isLoaded : true,
-        usersMoviefetch: res.data.data,
-      });
-    })
+
+    console.log(userMovies.tconst);
+
+    axios.delete(deleteurl, { data : {tconst: userMovies.tconst}, headers: { 'Content-Type': 'application/json' }})
+
+    this.componentDidMount();
   }
 
   render() {
