@@ -1,13 +1,12 @@
+$filter-color: rgb(255, 145, 1);
+
 .filter {
     padding: 10px;
     margin: 15px;
     border: 2px solid;
     border-radius: 20px;
     width: 30%;
-}
-
-.filter-buttons {
-    display: inline-block;
+    height: 1525px;
 }
 
 .buttons {
@@ -21,7 +20,7 @@
 
 .buttons:hover {
     // background-color: rgb(255, 145, 1);
-    // color: rgb(255, 145, 1);
+    color: $filter-color;
 }
 
 .filter-container {
@@ -33,5 +32,12 @@
 }
 
 .submit {
-    text-align: center;
+    color: white;
+    background-color: $filter-color;
+    border: 1px solid;
+    border-color: $filter-color;
+    border-radius: 10px;
+    margin: 5px 10px;
+    padding: 10px;
+    width: 200px;
 }
