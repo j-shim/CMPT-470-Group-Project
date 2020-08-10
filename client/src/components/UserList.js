@@ -11,7 +11,12 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import axios from 'axios'
+import CONSTANTS from '../constants/constants'
 import './UserList.scss';
+
+const url = CONSTANTS.API_URL + '/user-movie-items/list';
+const moviePosterURL = 'https://image.tmdb.org/t/p/w200';
 
 export default class UserList extends Component {
   constructor(props) {
@@ -19,27 +24,25 @@ export default class UserList extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      usersMovies: [
-        {
-          title: "Jaws",
-          year: 1997,
-          poster: "https://image.tmdb.org/t/p/w200/s2xcqSFfT6F7ZXHxowjxfG0yisT.jpg"
-        },
-        {
-          title: "Joker",
-          year: 2019,
-          poster: "https://image.tmdb.org/t/p/w200/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg"
-        },
-        {
-          title: "Toy Story 3",
-          year: 2010,
-          poster: "http://image.tmdb.org/t/p/w200/4cpGytCB0eqvRks4FAlJoUJiFPG.jpg"
-        }
-      ],
-      usersMoviePosterURL: [],
+      usersMoviefetch: [],
     }
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
+  async componentDidMount(){
+    axios.get(url)
+    .then((res) =>{
+      console.log(res.data.data);
+      this.setState({
+        isLoaded : true,
+        usersMoviefetch: res.data.data,
+      });
+    })
+  }
+
+  handleDelete(evt){
+    console.log("REMOVE");
+  }
 
   render() {
     return this.props.isLoggedIn ? (
@@ -47,22 +50,21 @@ export default class UserList extends Component {
         <h1>Your List:</h1>
         <div className = "movies-list">
         <List>
-          {this.state.usersMovies.map(userMovies => (
-            <ListItem alignItems="flex-start">
+          {this.state.usersMoviefetch.map(userMovies => (
+            <ListItem alignItems="flex-start" key = {userMovies.id}>
               <ListItemAvatar>
-                <img src ={userMovies.poster} alt = "movie-posters"></img>
+                <img src ={moviePosterURL.concat(userMovies.posterPath)} alt = "movie-posters"></img>
               </ListItemAvatar>
               <ListItemText
-                key = {userMovies.title}
                 primary={
                   <React.Fragment>
                     <Typography
                       component="span"
-                      variant="h3"
+                      variant="h4"
                       color="textPrimary"
                       
                     >
-                      {userMovies.title}
+                      {userMovies.originalTitle}
                     </Typography>
                   </React.Fragment>
                 }
@@ -73,7 +75,7 @@ export default class UserList extends Component {
                       variant="h5"
                       color="textPrimary"
                     >
-                      {userMovies.year}
+                      {userMovies.startYear}
                     </Typography>
                   </React.Fragment>
                   
@@ -87,7 +89,7 @@ export default class UserList extends Component {
                   <FavoriteIcon fontSize="large" />
                 </IconButton>
                 <IconButton>
-                  <DeleteIcon fontSize="large"/>
+                  <DeleteIcon fontSize="large" onClick = {this.handleDelete}/>
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
