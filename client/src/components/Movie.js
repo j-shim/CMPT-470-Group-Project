@@ -1,10 +1,8 @@
 import React from 'react'
 import { generateMovies } from '../services/FilterService'
-// import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-// import PropTypes from 'prop-types'
 import './Movie.scss'
 
 var urlbase = "https://api.themoviedb.org/3/"
@@ -65,7 +63,7 @@ class Movie extends React.Component {
     componentDidUpdate(prevProps) {
       if(prevProps !== this.props) {
         this.setState({isLoaded: false})
-        console.log("Changing filtered list");
+        console.log("Changing filtered list in did update");
         generateMovies(this.props.filter)
         .then((res) => {
           console.log("Filtered movie response: " + JSON.stringify(res));
@@ -89,7 +87,11 @@ class Movie extends React.Component {
       if (error) {
         return <div>Error: {error.message}</div>;
       } else if (!isLoaded) {
-        return <div>Loading...</div>;
+        return (
+          <div className="spinner-border text-dark" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        )
       } else {
         return (
           <div className="movie-container">

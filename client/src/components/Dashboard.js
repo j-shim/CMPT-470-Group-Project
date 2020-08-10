@@ -14,17 +14,17 @@ export default class Dashboard extends Component {
         startAfter: 1950,
         endBefore: 2020,
         runtimeMinutes: {
-          from: 60,
+          from: 30,
           to: 400
         },
         genres: [],
         averageRating: {
-          from: 0,
-          to: 10
+          from: 0.0,
+          to: 10.0
         },
         numVotes: 1000,
         titleIncludes: null,
-        numMovies: 5
+        numMovies: 20
       }
     };
   }
