@@ -6,9 +6,12 @@ const apiKey = "2eee6eebccdf970062dbd4c43dac66a6";
 module.exports = async function (movies) {
     let results = [];
     for (movie of movies) {
+        const type = movie.titleType === 'movie' ? 'movie': 'tv'
         let url = "".concat(
             baseURL,
-            "search/movie?api_key=",
+            "search/",
+            type,
+            "?api_key=",
             apiKey,
             "&query=",
             movie.primaryTitle,

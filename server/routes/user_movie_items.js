@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const jwt = require('jsonwebtoken')
+const config = require('../config/config')
 
 const Promise = require("bluebird");
 
 const movieRenderer = require('../helpers/movieRenderer');
 const UserMovieItem = require("../models/userMovieItem");
-
+const User = require('../models/user')
 
 router.get('/list', getMovieItems);
 router.post('/add', addMovieItem);
@@ -14,31 +16,45 @@ router.put('/update', updateMovieItem);
 
 module.exports = router;
 
+
+async function getUserIdFromUsername(username) {
+    const result = await User.query(qb => {
+        qb.where('username', username)
+    }).fetch()
+
+    return result.toJSON()['id'];
+}
+
 function getMovieItems(req, res, next) {
-    //Verify username and get userId
+    const authorization = req.headers.authorization
+    const token = authorization.split(' ')[1]
 
-    const userId = 1;
+    jwt.verify(token, config.JWT_SECRET, async (err, decoded) => {
+        if (err) return next(err);
+        const username = decoded.sub
+        const userId = await getUserIdFromUsername(username);
 
-    UserMovieItem.query(qb => {
-            qb.where('userId', userId);
-            qb.leftJoin('title_with_ratings', 'user_movie_items.tconst', '=', 'title_with_ratings.tconst')
-            qb.select('*')
-        }).fetchAll()
-        .then(async (results) => {
-            console.log(results.toJSON());
-            // return res.json({
-            //     data: await movieRenderer(results.toJSON())
-            // })
-        }).catch(err => {
-            return next(err);
-        })
+        UserMovieItem.query(qb => {
+                qb.where('userId', userId);
+                qb.leftJoin('title_with_ratings', 'user_movie_items.tconst', '=', 'title_with_ratings.tconst')
+                qb.select('*')
+            }).fetchAll()
+            .then(async (results) => {
+                console.log(results.toJSON());
+                return res.status(200).json({
+                    data: await movieRenderer(results.toJSON())
+                })
+            }).catch(err => {
+                return next(err);
+            })
+    })
 }
 
 function addMovieItem(req, res, next) {
     //Verify username and get userId
 
     const userId = 1;
-    const tconst = 'tt0270803';
+    const tconst = 'tt2198109';
 
     Promise.try(() => {
         return UserMovieItem.where({
@@ -151,6 +167,7 @@ function updateMovieItem(req, res, next) {
         return next(err);
     })
 }
+
 
 // getMovieItems();
 // addMovieItem();
