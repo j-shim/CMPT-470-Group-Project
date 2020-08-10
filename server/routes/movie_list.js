@@ -13,7 +13,7 @@ router.get('/most-favorite', getMostFavorite)
 
 module.exports = router;
 
-function getTrending(res, req, next) {
+function getTrending(req, res, next) {
     let movieItems = knex.select('tconst')
         .count('* as count')
         .from('user_movie_items')
@@ -35,12 +35,14 @@ function getTrending(res, req, next) {
         // console.log(results.toJSON())
 
         res.status(200).json({
-            data: await movieRenderer(results.toJSON())
+            data: await movieRenderer(results.toJSON().slice(0, 50))
         })
+    }).catch(err => {
+        return next(err);
     })
 }
 
-function getMostWatched(res, req, next) {
+function getMostWatched(req, res, next) {
     let movieItems = knex.select('tconst')
         .count('* as count')
         .from('user_movie_items')
@@ -56,12 +58,14 @@ function getMostWatched(res, req, next) {
         // console.log(results.toJSON())
 
         res.status(200).json({
-            data: await movieRenderer(results.toJSON())
+            data: await movieRenderer(results.toJSON().slice(0, 50))
         })
+    }).catch(err => {
+        return next(err);
     })
 }
 
-function getMostFavorite(res, req, next) {
+function getMostFavorite(req, res, next) {
     let movieItems = knex.select('tconst')
         .count('* as count')
         .from('user_movie_items')
@@ -77,8 +81,10 @@ function getMostFavorite(res, req, next) {
         // console.log(results.toJSON())
 
         res.status(200).json({
-            data: await movieRenderer(results.toJSON())
+            data: await movieRenderer(results.toJSON().slice(0, 50))
         })
+    }).catch(err => {
+        return next(err);
     })
 }
 
