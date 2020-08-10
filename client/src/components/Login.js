@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import UserService from '../services/UserService'
-import AlertService from '../services/AlertService'
 import CONSTANTS from '../constants/constants'
 
 export default class Login extends Component {
@@ -34,16 +33,12 @@ export default class Login extends Component {
         // store jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem(CONSTANTS.TOKEN_KEY, res.data.token)
         this.props.setLoggedIn(true)
-        AlertService.alert(this.props, 'Login successful', true)
+
+        // return user
       }).catch((err) => {
-        let msg
-        if (err && err.response && err.response.data) {
-          msg = err.response.data.message
-        } else {
-          msg = err
-        }
-        console.error(msg)
-        AlertService.alert(this.props, msg, false)
+        // debugger
+        // console.error(err.response.data.message)
+        console.error(err)
       })
 
   }
