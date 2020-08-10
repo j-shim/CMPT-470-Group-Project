@@ -147,7 +147,7 @@ class Movie extends React.Component {
         )
       } else {
         return (
-          <div className="movie-container">
+          <div className="movie-container" style={{width: this.state.width}}>
             <GridList cellHeight={325} cols={5}>
               {this.state.generatedMovies.map((generatedMovies, index) => (
                 <GridListTile className="flip-card" key={index}>

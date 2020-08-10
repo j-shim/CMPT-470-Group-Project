@@ -46,13 +46,13 @@ export default class UserList extends Component {
 
   refreshList(){
     axios.get(geturl)
-    .then((res) =>{
-      console.log(res.data.data);
-      this.setState({
-        isLoaded : true,
-        usersMoviefetch: res.data.data,
-      });
-    })
+      .then((res) =>{
+        console.log(res.data.data);
+        this.setState({
+          isLoaded : true,
+          usersMoviefetch: res.data.data,
+        });
+      })
   }
 
   handleWatched(evt,userMovies){
@@ -66,9 +66,9 @@ export default class UserList extends Component {
     watch = !watch;
     console.log(watch);
     userMovies.isWatched = watch;
-    axios.put(updateurl, userMovies, options);
-
-    this.refreshList();
+    axios.put(updateurl, {tconst: userMovies.tconst, isWatched: watch}, options).then(() => {
+      this.refreshList();
+    });
   }
 
   handleFavorite(evt,userMovies){
@@ -83,9 +83,9 @@ export default class UserList extends Component {
     fav = !fav;
     console.log(fav);
     userMovies.isFavorite = fav;
-    axios.put(updateurl, userMovies, options);
-
-    this.refreshList();
+    axios.put(updateurl, {tconst: userMovies.tconst, isFavorite: fav}, options).then(() => {
+      this.refreshList()
+    });
   }
 
   handleDelete(evt,userMovies){
@@ -93,9 +93,9 @@ export default class UserList extends Component {
 
     console.log(userMovies.tconst);
 
-    axios.delete(deleteurl, { data : {tconst: userMovies.tconst}, headers: { 'Content-Type': 'application/json' }})
-
-    this.refreshList();
+    axios.delete(deleteurl, { data : {tconst: userMovies.tconst}, headers: { 'Content-Type': 'application/json' }}).then(() => {
+      this.refreshList();
+    })
   }
 
   render() {
@@ -107,7 +107,7 @@ export default class UserList extends Component {
           {this.state.usersMoviefetch.map(userMovies => (
             <ListItem alignItems="flex-start" key = {userMovies.id}>
               <ListItemAvatar>
-                <img src ={moviePosterURL.concat(userMovies.posterPath)} alt = "movie-posters"></img>
+                {/* <img src ={moviePosterURL.concat(userMovies.posterPath)} alt = "movie-posters"></img> */}
               </ListItemAvatar>
               <ListItemText
                 primary={
