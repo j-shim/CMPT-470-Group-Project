@@ -113,7 +113,8 @@ export default class UserList extends Component {
             {this.state.usersMoviefetch.map(userMovies => (
               <ListItem alignItems="flex-start" key = {userMovies.id}>
                 <ListItemAvatar>
-                  <img alt="movie-posters" src ={moviePosterURL.concat(userMovies.posterPath)} />
+                  <img alt="movie-posters" src ={(userMovies.posterPath == null) ? require('../img/default-movie-poster.png'): 
+                    moviePosterURL.concat(userMovies.posterPath)} />
                 </ListItemAvatar>
                 <ListItemText
                   primary={
