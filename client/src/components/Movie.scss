@@ -53,3 +53,33 @@ ul {
   min-width: 100%;
   transform: translate(-50%, -50%);
 }
+
+.movie-buttons {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 15px;
+}
+
+.imdb-button {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0 10px;
+  background-color: white;
+}
+
+.imdb-button:hover {
+  transform: scale(1.2);
+}
+
+.add-movie-button {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: white;
+}
+
+.add-movie-button:hover {
+  transform: scale(1.2);
+}

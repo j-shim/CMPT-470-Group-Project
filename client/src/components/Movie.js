@@ -119,7 +119,6 @@ class Movie extends React.Component {
         this.setState({isLoaded: false})
         generateMovies(this.props.filter)
         .then((res) => {
-          console.log("Filtered movie response: " + JSON.stringify(res));
 
           this.setState({
             isLoaded: true,
@@ -159,14 +158,19 @@ class Movie extends React.Component {
                       />  
                     </div>
                     
-                    <div class="flip-card-back">
+                    <div className="flip-card-back">
                       <p>
                         Genre: {generatedMovies.genres}
                       </p> 
                       <p>Average Rating: {generatedMovies.averageRating}</p> 
                       <p>Vote: {generatedMovies.numVotes}</p>
                       <p>Runtime: {generatedMovies.runtimeMinutes} minutes</p>
-                      <button className="add-movie-button buttons">Add to List</button>
+                      <div className="movie-buttons">
+                        <a href={"".concat("https://www.imdb.com/title/", generatedMovies.tconst)}>
+                          <button className="imdb-button">IMDb</button>
+                        </a>
+                        <button className="add-movie-button">+</button>
+                      </div>
                     </div>
                   </div>
                 </GridListTile>
