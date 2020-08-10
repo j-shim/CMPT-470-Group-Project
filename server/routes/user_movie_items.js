@@ -50,120 +50,135 @@ function getMovieItems(req, res, next) {
 }
 
 function addMovieItem(req, res, next) {
-    //Verify username and get userId
+    const authorization = req.headers.authorization
+    const token = authorization.split(' ')[1]
 
-    const userId = 1;
-    const tconst = 'tt2198109';
+    jwt.verify(token, config.JWT_SECRET, async (err, decoded) => {
+        if (err) return next(err);
+        const username = decoded.sub
+        const userId = await getUserIdFromUsername(username);
+        const {
+            tconst
+        } = req.body;
 
-    Promise.try(() => {
-        return UserMovieItem.where({
-            userId: userId,
-            tconst: tconst
-        }).fetchAll()
-    }).then(results => {
-        if (results.length > 0) {
-            console.log('duplicated')
+        Promise.try(() => {
+            return UserMovieItem.where({
+                userId: userId,
+                tconst: tconst
+            }).fetchAll()
+        }).then(results => {
+            if (results.length > 0) {
+                // console.log('duplicated')
 
-            // return res.status(409).json({
-            //     message: 'Duplicate movie item'
-            // })
-        } else {
-            return UserMovieItem.forge({
-                    userId: userId,
-                    tconst: tconst
-                }).save()
-                .then(() => {
-                    console.log('created')
+                return res.status(409).json({
+                    message: 'Duplicate movie item'
+                })
+            } else {
+                return UserMovieItem.forge({
+                        userId: userId,
+                        tconst: tconst
+                    }).save()
+                    .then(() => {
+                        // console.log('created')
 
-                    // return res.status(201).json({
-                    //     message: 'Successfully created movie item'
-                    // })
-                });
-        }
-    }).catch((err) => {
-        return next(err);
+                        return res.status(201).json({
+                            message: 'Successfully created movie item'
+                        })
+                    });
+            }
+        }).catch((err) => {
+            return next(err);
+        })
     })
 }
 
 function removeMovieItem(req, res, next) {
-    //Verify username and get userId
+    const authorization = req.headers.authorization
+    const token = authorization.split(' ')[1]
 
-    const userId = 1;
-    const tconst = 'tt0270803';
+    jwt.verify(token, config.JWT_SECRET, async (err, decoded) => {
+        if (err) return next(err);
+        const username = decoded.sub
+        const userId = await getUserIdFromUsername(username);
+        const {
+            tconst
+        } = req.body;
 
-    Promise.try(() => {
-        return UserMovieItem.where({
-            userId: userId,
-            tconst: tconst
-        }).fetchAll()
-    }).then(results => {
-        if (results.length === 0) {
-            console.log('not found')
-            // return res.status(204).json({
-            //     message: 'Movie item not found'
-            // })
-        } else {
+        Promise.try(() => {
             return UserMovieItem.where({
-                    userId: userId,
-                    tconst: tconst
-                }).destroy()
-                .then(() => {
-                    console.log('deleted')
-                    // return res.status(200).json({
-                    //     message: 'Successfully deleted movie item'
-                    // })
-                });
-        }
-    }).catch(err => {
-        return next(err);
+                userId: userId,
+                tconst: tconst
+            }).fetchAll()
+        }).then(results => {
+            if (results.length === 0) {
+                // console.log('not found')
+                return res.status(204).json({
+                    message: 'Movie item not found'
+                })
+            } else {
+                return UserMovieItem.where({
+                        userId: userId,
+                        tconst: tconst
+                    }).destroy()
+                    .then(() => {
+                        // console.log('deleted')
+                        return res.status(200).json({
+                            message: 'Successfully deleted movie item'
+                        })
+                    });
+            }
+        }).catch(err => {
+            return next(err);
+        })
     })
 }
 
 function updateMovieItem(req, res, next) {
-    //Verify username and get userId
+    const authorization = req.headers.authorization
+    const token = authorization.split(' ')[1]
 
-    const userId = 1;
-    //req.body
-    obj = {
-        tconst: 'tt0270803',
-        isFavorite: false
-    }
+    jwt.verify(token, config.JWT_SECRET, async (err, decoded) => {
+        if (err) return next(err);
+        const username = decoded.sub
+        const userId = await getUserIdFromUsername(username);
+        const obj = req.body;
 
-    let column;
-    for (key in obj) {
-        if (key === 'isWatched' || key === 'isFavorite') {
-            column = key;
-            break;
+        let column;
+        for (key in obj) {
+            if (key === 'isWatched' || key === 'isFavorite') {
+                column = key;
+                break;
+            }
         }
-    }
 
-    Promise.try(() => {
-        return UserMovieItem.where({
-            userId: userId,
-            tconst: obj.tconst
-        }).fetchAll()
-    }).then(results => {
-        if (results.length === 0) {
-            console.log('not found')
-            // return res.status(204).json({
-            //     message: 'Movie item not found'
-            // })
-        } else {
+        Promise.try(() => {
             return UserMovieItem.where({
-                    userId: userId,
-                    tconst: obj.tconst
-                }).save(column, obj[column], {
-                    method: 'update'
+                userId: userId,
+                tconst: obj.tconst
+            }).fetchAll()
+        }).then(results => {
+            if (results.length === 0) {
+                // console.log('not found')
+                return res.status(204).json({
+                    message: 'Movie item not found'
                 })
-                .then(() => {
-                    console.log('updated')
-                    // return res.status(200).json({
-                    //     message: 'Successfully updated movie item'
-                    // })
-                });
-        }
-    }).catch(err => {
-        return next(err);
+            } else {
+                return UserMovieItem.where({
+                        userId: userId,
+                        tconst: obj.tconst
+                    }).save(column, obj[column], {
+                        method: 'update'
+                    })
+                    .then(() => {
+                        // console.log('updated')
+                        return res.status(200).json({
+                            message: 'Successfully updated movie item'
+                        })
+                    });
+            }
+        }).catch(err => {
+            return next(err);
+        })
     })
 }
 

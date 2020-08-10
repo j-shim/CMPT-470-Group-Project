@@ -32,11 +32,11 @@ function getTrending(res, req, next) {
         qb.orderBy('count', 'desc')
         qb.select('*')
     }).fetchAll().then(async (results) => {
-        console.log(results.toJSON())
+        // console.log(results.toJSON())
 
-        // res.status(200).json({
-        //     data: await movieRenderer(results.toJSON())
-        // })
+        res.status(200).json({
+            data: await movieRenderer(results.toJSON())
+        })
     })
 }
 
@@ -53,11 +53,11 @@ function getMostWatched(res, req, next) {
         qb.orderBy('count', 'desc')
         qb.select('*')
     }).fetchAll().then(async (results) => {
-        console.log(results.toJSON())
+        // console.log(results.toJSON())
 
-        // res.status(200).json({
-        //     data: await movieRenderer(results.toJSON())
-        // })
+        res.status(200).json({
+            data: await movieRenderer(results.toJSON())
+        })
     })
 }
 
@@ -74,11 +74,11 @@ function getMostFavorite(res, req, next) {
         qb.orderBy('count', 'desc')
         qb.select('*')
     }).fetchAll().then(async (results) => {
-        console.log(results.toJSON())
+        // console.log(results.toJSON())
 
-        // res.status(200).json({
-        //     data: await movieRenderer(results.toJSON())
-        // })
+        res.status(200).json({
+            data: await movieRenderer(results.toJSON())
+        })
     })
 }
 
