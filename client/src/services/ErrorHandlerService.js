@@ -7,8 +7,8 @@ export default {
         // Invalid token
         console.error(err.response.data.message)
         window.alert(err.response.data.message + ': Please log in')
-        localStorage.setItem(CONSTANTS.TOKEN_KEY, null)
-        localStorage.setItem('470isLoggedIn', null)
+        localStorage.removeItem(CONSTANTS.TOKEN_KEY)
+        localStorage.removeItem('470isLoggedIn')
         document.getElementById('logout-button').click()
       } else {
         console.error(err.response.data.message)

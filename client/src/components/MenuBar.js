@@ -8,6 +8,7 @@ export default class MenuBar extends Component {
   logout = () => {
     // remove user from local storage to log user out
     localStorage.removeItem(CONSTANTS.TOKEN_KEY)
+    localStorage.removeItem('470isLoggedIn')
     this.props.setLoggedIn(false)
     window.alert('Logout successful')
   }
