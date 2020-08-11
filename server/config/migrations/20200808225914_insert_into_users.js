@@ -1,10 +1,10 @@
 exports.up = function (knex) {
   return knex.raw('INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `hash`) VALUES\
-    (1, "test", "user", "test1", "$2a$10$1DAgUNkv1wPcdx18ALl8qu4ViTi6KVso13uR0iHlb597CL0SaXxLm"),\
-    (2, "test", "user", "test2", "$2a$10$AYwVaZW9OOEVeyAZjxkyVui1yZgHhvX4Cmu9.B.5Xl7b8/kH0acOe"),\
-    (3, "test", "user", "test3", "$2a$10$TVNMwaRDktQ3cwVOha3Wt.2cxoO8uTs30D8Mt8pr7i9u0gByFMPFC"),\
-    (4, "test", "user", "test4", "$2a$10$IyC7qiWnH0qP0YMpQe6gPe.fxWFBM2gorvan3Rg2YHFTAD9OYQITq"),\
-    (5, "test", "user", "test5", "$2a$10$SOYQTP3h6C05fDVhDrk4fO6lzjZjytEczdaN9pxeBTZ1JzLvc4OCu");'
+    (1, "test", "user", "test1", "$2a$10$Hm5o6Sec13.BwVVMO2yxoO9bf5Lo5h33RLnBNfQdJAR07rDkM4T1e"),\
+    (2, "test", "user", "test2", "$2a$10$oIEAAsTHqXZPJFUwQc1I4evik7L7nPDjRI99nud6JqeYTh07ru/Gq"),\
+    (3, "test", "user", "test3", "$2a$10$pFwfijadnZGyLsKLbyasNuwi7vLnpPJXorUP0Re6u.VbZsT4EqwLm"),\
+    (4, "test", "user", "test4", "$2a$10$ciMzBuChwrLind9XP77x2OkW2EP6V71rr/o.Hkcam7o1JcdOxMzDO"),\
+    (5, "test", "user", "test5", "$2a$10$nQCNkUbwgOUtxf8MQT305eVeeEJiddbbLluq1thS8WLNg3w0/wWaG");'
   )
     .then(() => {
       console.log("Successfully inserted into users table")
