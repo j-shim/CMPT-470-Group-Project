@@ -21,6 +21,14 @@ docker-compose build && docker-compose up
 
 # Stop production server by running:
 docker-compose down
+
+# There are five accounts pre-configured for testing:
+# Username / Password
+# test1 / 470test1
+# test2 / 470test2
+# test3 / 470test3
+# test4 / 470test4
+# test5 / 470test5
 ```
 
 ## Running Development Server
