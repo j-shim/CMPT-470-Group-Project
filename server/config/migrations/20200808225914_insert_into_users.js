@@ -8,11 +8,11 @@ exports.up = function (knex) {
   )
     .then(() => {
       console.log("Successfully inserted into users table")
-      return knex('users').columnInfo().then((info) => {
-        console.log(info)
-      })
+      // return knex('users').columnInfo().then((info) => {
+      //   console.log(info)
+      // })
     }).catch(err => {
-      console.log(err)
+      console.error(err)
     })
 }
 
@@ -21,6 +21,6 @@ exports.down = function (knex) {
     .then(() => {
       console.log("Successfully deleted from users table")
     }).catch(err => {
-      console.log(err)
+      console.error(err)
     })
 }

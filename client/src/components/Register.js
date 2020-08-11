@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import UserService from '../services/UserService'
 import CONSTANTS from '../constants/constants'
+import ErrorHandlerService from '../services/ErrorHandlerService'
 
 export default class Register extends Component {
   constructor(props) {
@@ -39,31 +40,19 @@ export default class Register extends Component {
 
     UserService.register(payloadForRegister)
       .then((res) => {
-        console.log(res)
-        // auto login user
-
         UserService.login(payloadForLogin)
           .then((res) => {
-            console.log("Login response: " + res.data)
-            console.log(res.data.token)
+            window.alert('Login successful')
             // store jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem(CONSTANTS.TOKEN_KEY, res.data.token)
             this.props.setLoggedIn(true)
 
             // return user
           }).catch((err) => {
-            if (err && err.response && err.response.data) {
-              console.error(err.response.data.message)
-            } else {
-              console.error(err)
-            }
+            ErrorHandlerService.handleError(err)
           })
       }).catch((err) => {
-        if (err && err.response && err.response.data) {
-          console.error(err.response.data.message)
-        } else {
-          console.error(err)
-        }
+        ErrorHandlerService.handleError(err)
       })
 
   }
