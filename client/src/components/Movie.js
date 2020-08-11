@@ -8,9 +8,12 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import './Movie.scss'
+import axios from 'axios'
+import CONSTANTS from '../constants/constants'
 
 var urlbase = "https://api.themoviedb.org/3/"
 let APIKEY = "2eee6eebccdf970062dbd4c43dac66a6"
+const addurl = CONSTANTS.API_URL + '/user-movie-items/add';
 
 class Movie extends React.Component {
     constructor(props)
@@ -24,6 +27,7 @@ class Movie extends React.Component {
           configData: null,
           width: "100%"
         };
+        this.handleAdd = this.handleAdd.bind(this);
     }
 
     componentDidMount() {
@@ -120,6 +124,15 @@ class Movie extends React.Component {
       }
     }
 
+    handleAdd(evt,generatedMovies){
+      evt.preventDefault();
+      const options = {
+        headers: { 'Content-Type': 'application/json' }
+      }
+      axios.post(addurl, {tconst: generatedMovies.tconst}, options)
+    }
+  
+
     render() {
       const { error, isLoaded } = this.state;
       if (error) {
@@ -156,7 +169,7 @@ class Movie extends React.Component {
                         <a href={"".concat("https://www.imdb.com/title/", generatedMovies.tconst)}>
                           <button className="imdb-button"><strong>IMDb</strong></button>
                         </a>
-                        <button className="add-movie-button">+</button>
+                        <button className="add-movie-button" onClick={e => this.handleAdd(e, generatedMovies)} >+</button>
                       </div>
                     </div>
                   </div>
