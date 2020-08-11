@@ -1,4 +1,4 @@
-# CMPT 470 Group Project
+# CMPT 470 Group Project - Movie Database
 
 ## Checkpoint
 
@@ -7,13 +7,25 @@ For the checkpoint, we have worked on:
 - Set up the back-end environment
 - Set up the MySQL environment with some data
 - Implemented a login/register system for our movie web application
-- Created a simple UI of our dashboard with moies displaying after user logs in
+- Created a simple UI of our dashboard with movies displaying after user logs in
 - Created a simple "Trending" filter for now that displays different movie selections depending on the filter applied
 
+## Production / Testing
 
-## Running Dev Server
+- Live server is up and running inside AWS EC2 instance on http://3.128.49.215:8081/.
 
-### React Frontend on http://localhost:3000/:
+- Run and test production server locally on http://localhost:8081/:
+
+```bash
+docker-compose build && docker-compose up
+
+# Stop production server by running:
+docker-compose down
+```
+
+## Running Development Server
+
+### 1. React Frontend on http://localhost:3000/:
 
 ```bash
 cd client
@@ -21,7 +33,7 @@ npm install
 npm start
 ```
 
-### Express Backend on http://localhost:3001/:
+### 2. Express Backend on http://localhost:3001/:
 
 ```bash
 cd server
@@ -29,7 +41,7 @@ npm install
 npm run dev
 ```
 
-### Database Setup
+### 3. Database Setup (for development server only)
 
 **Steps 1 and 2 in a single script** (Unix/Linux):
 
