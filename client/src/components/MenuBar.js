@@ -54,7 +54,7 @@ export default class MenuBar extends Component {
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <NavLink style={{ backgroundColor: 'white', color: 'black' }} to="/list" activeClassName="active" className="dropdown-item">My List</NavLink>
                       <NavLink style={{ backgroundColor: 'white', color: 'black' }} to="/edit-profile" activeClassName="active" className="dropdown-item">Edit Profile</NavLink>
-                      <span onClick={this.logout} style={{ cursor: 'pointer' }} className="dropdown-item">Logout</span>
+                      <span onClick={this.logout} style={{ cursor: 'pointer' }} className="dropdown-item" id="logout-button">Logout</span>
 
                     </div>
                   </div>
