@@ -60,7 +60,7 @@ class App extends Component {
     if (isLoggedIn) {
       localStorage.setItem('470isLoggedIn', 'true')
     } else {
-      localStorage.setItem('470isLoggedIn', null)
+      localStorage.removeItem('470isLoggedIn')
     }
   }
 
