@@ -35,7 +35,6 @@ export default class UserList extends Component {
   componentDidMount(){
     axios.get(geturl)
     .then((res) =>{
-      console.log(res.data.data);
       this.setState({
         isLoaded : true,
         usersMoviefetch: res.data.data,
@@ -46,7 +45,6 @@ export default class UserList extends Component {
   refreshList(){
     axios.get(geturl)
       .then((res) =>{
-        console.log(res.data.data);
         this.setState({
           isLoaded : true,
           usersMoviefetch: res.data.data,
@@ -63,7 +61,6 @@ export default class UserList extends Component {
     var watch = userMovies.isWatched;
     Boolean(watch);
     watch = !watch;
-    console.log(watch);
     userMovies.isWatched = watch;
     axios.put(updateurl, {tconst: userMovies.tconst, isWatched: watch}, options).then(() => {
       this.refreshList();
@@ -80,7 +77,6 @@ export default class UserList extends Component {
     var fav = userMovies.isFavorite;
     Boolean(fav);
     fav = !fav;
-    console.log(fav);
     userMovies.isFavorite = fav;
     axios.put(updateurl, {tconst: userMovies.tconst, isFavorite: fav}, options).then(() => {
       this.refreshList()
@@ -90,7 +86,6 @@ export default class UserList extends Component {
   handleDelete(evt,userMovies){
     evt.preventDefault();
 
-    console.log(userMovies.tconst);
 
     axios.delete(deleteurl, { data : {tconst: userMovies.tconst}, headers: { 'Content-Type': 'application/json' }}).then(() => {
       this.refreshList();

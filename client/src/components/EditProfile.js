@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import UserService from '../services/UserService'
 import CONSTANTS from '../constants/constants'
+import ErrorHandlerService from '../services/ErrorHandlerService'
 
 export default class EditProfile extends Component {
   constructor(props) {
@@ -22,11 +23,7 @@ export default class EditProfile extends Component {
           lastname: res.data.lastname
         })
       }).catch((err) => {
-        if (err && err.response && err.response.data) {
-          console.error(err.response.data.message)
-        } else {
-          console.error(err)
-        }
+        ErrorHandlerService.handleError(err)
       })
   }
 
@@ -50,16 +47,11 @@ export default class EditProfile extends Component {
 
     UserService.editProfile(payload)
       .then((res) => {
-        console.log('Profile updated successfully')
-        console.log(res.data.token)
         // store jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem(CONSTANTS.TOKEN_KEY, res.data.token)
+        window.alert('Profile updated successfully')
       }).catch((err) => {
-        if (err && err.response && err.response.data) {
-          console.error(err.response.data.message)
-        } else {
-          console.error(err)
-        }
+        ErrorHandlerService.handleError(err)
       })
   }
 

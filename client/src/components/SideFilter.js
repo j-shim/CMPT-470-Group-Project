@@ -65,18 +65,15 @@ export default class SideFilter extends Component {
 
             for(let i = 0; i < tempFilter.genres.length; i++) {
                 if(tempFilter.genres[i] === temp[index].name) {
-                    console.log("Removing " + tempFilter.genres[i] + " from genres");
                     tempFilter.genres.splice(i, 1);
                     break;
                 }
             }
 
-            console.log(tempFilter.genres);
 
         }else if (temp[index].bgColor === "white") {
             temp[index].bgColor = "orange";
 
-            console.log("Adding  " + temp[index].name + " to genres");
             tempFilter.genres.push(temp[index].name)
         }
 
@@ -105,8 +102,6 @@ export default class SideFilter extends Component {
     }
 
     filterOnClick() {
-        console.log("Clicked on Search");
-        console.log("This is the filter we searching: " + JSON.stringify(this.state.filter));
         this.props.setFilter(this.state.filter);
     }
 
@@ -307,7 +302,6 @@ export default class SideFilter extends Component {
                         (event) => {
                             let tempFilter = this.state.filter;
                             tempFilter.titleIncludes = event.target.value;
-                            console.log("Title includes: " + tempFilter.titleIncludes);
                             this.setState({filter: tempFilter});
                         }
                     } />

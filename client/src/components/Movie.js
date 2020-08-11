@@ -3,6 +3,7 @@ import { generateMovies } from '../services/FilterService'
 import { generateTrendingMovies } from '../services/TrendingService'
 import { generateMostWatchedMovies } from '../services/MostWatchedService'
 import { generateMostFavoriteMovies } from '../services/MostFavoriteService'
+import ErrorHandlerService from '../services/ErrorHandlerService'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
@@ -57,11 +58,8 @@ class Movie extends React.Component {
             generatedMovies: res.data.data,
           })
 
-          // return user
         }).catch((err) => {
-          // debugger
-          // console.error(err.response.data.message)
-          console.error(err)
+          ErrorHandlerService.handleError(err)
         })
       }else if (this.props.type === "trending") {
         generateTrendingMovies()
@@ -73,11 +71,8 @@ class Movie extends React.Component {
             generatedMovies: res.data.data,
           })
 
-          // return user
         }).catch((err) => {
-          // debugger
-          // console.error(err.response.data.message)
-          console.error(err)
+          ErrorHandlerService.handleError(err)
         })
       }else if (this.props.type === "most-watched") {
         generateMostWatchedMovies()
@@ -89,11 +84,8 @@ class Movie extends React.Component {
             generatedMovies: res.data.data,
           })
 
-          // return user
         }).catch((err) => {
-          // debugger
-          // console.error(err.response.data.message)
-          console.error(err)
+          ErrorHandlerService.handleError(err)
         })
       }else if (this.props.type === "most-favorite") {
         generateMostFavoriteMovies()
@@ -105,11 +97,8 @@ class Movie extends React.Component {
             generatedMovies: res.data.data,
           })
 
-          // return user
         }).catch((err) => {
-          // debugger
-          // console.error(err.response.data.message)
-          console.error(err)
+          ErrorHandlerService.handleError(err)
         })
       }
     }
@@ -125,11 +114,8 @@ class Movie extends React.Component {
             generatedMovies: res.data.data
           })
 
-          // return user
         }).catch((err) => {
-          // debugger
-          // console.error(err.response.data.message)
-          console.error(err)
+          ErrorHandlerService.handleError(err)
         })
       }
     }

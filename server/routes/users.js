@@ -114,7 +114,6 @@ function register(req, res, next) {
         hash
       }).save()
         .then(result => {
-          console.log(result)
           return res.json({})
         })
         .catch(err => {

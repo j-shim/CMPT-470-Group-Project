@@ -19,7 +19,6 @@ export default class AddMovie extends Component {
     evt.preventDefault();
     if(this.state.value !== undefined)
     {
-      console.log(this.state.value);
       //POST HERE
     }
   }
