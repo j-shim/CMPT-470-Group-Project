@@ -110,7 +110,7 @@ export default class EditProfile extends Component {
                 placeholder="Verify Password"
                 required />
             </div>
-            <button type="submit" className="btn btn-primary">Edit Profile</button>
+            <button type="submit" className="btn btn-primary">Save</button>
           </form>
         </div>
       </div>

@@ -72,8 +72,8 @@ function addMovieItem(req, res, next) {
             if (results.length > 0) {
                 // console.log('duplicated')
 
-                return res.status(409).json({
-                    message: 'Duplicate movie item'
+                return res.status(201).json({
+                    message: 'Duplicated movie item'
                 })
             } else {
                 return UserMovieItem.forge({
@@ -84,7 +84,7 @@ function addMovieItem(req, res, next) {
                         // console.log('created')
 
                         return res.status(201).json({
-                            message: 'Successfully created movie item'
+                            message: 'Movie added to list'
                         })
                     });
             }

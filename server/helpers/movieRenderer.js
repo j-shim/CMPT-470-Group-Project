@@ -17,7 +17,7 @@ module.exports = async function (movies) {
             "?api_key=",
             apiKey,
             "&query=",
-            movie.primaryTitle,
+            movie.originalTitle,
             "&page=1&year=",
             movie.startYear
         );
