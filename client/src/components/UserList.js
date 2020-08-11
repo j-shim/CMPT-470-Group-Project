@@ -43,7 +43,7 @@ export default class UserList extends Component {
   }
 
   refreshList(){
-    axios.get(geturl)
+    return axios.get(geturl)
       .then((res) =>{
         this.setState({
           isLoaded : true,
@@ -63,7 +63,7 @@ export default class UserList extends Component {
     watch = !watch;
     userMovies.isWatched = watch;
     axios.put(updateurl, {tconst: userMovies.tconst, isWatched: watch}, options).then(() => {
-      this.refreshList();
+      this.refreshList().then(() => window.alert('Movie item updated'));
     });
   }
 
@@ -79,7 +79,7 @@ export default class UserList extends Component {
     fav = !fav;
     userMovies.isFavorite = fav;
     axios.put(updateurl, {tconst: userMovies.tconst, isFavorite: fav}, options).then(() => {
-      this.refreshList()
+      this.refreshList().then(() => window.alert('Movie item updated'))
     });
   }
 
@@ -88,7 +88,7 @@ export default class UserList extends Component {
 
 
     axios.delete(deleteurl, { data : {tconst: userMovies.tconst}, headers: { 'Content-Type': 'application/json' }}).then(() => {
-      this.refreshList();
+      this.refreshList().then(() => window.alert('Movie list updated'))
     })
   }
 
@@ -120,7 +120,7 @@ export default class UserList extends Component {
                         color="textPrimary"
                         
                       >
-                        {userMovies.originalTitle}
+                        {userMovies.primaryTitle}
                       </Typography>
                     </React.Fragment>
                   }

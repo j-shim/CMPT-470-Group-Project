@@ -129,7 +129,9 @@ class Movie extends React.Component {
       const options = {
         headers: { 'Content-Type': 'application/json' }
       }
-      axios.post(addurl, {tconst: generatedMovies.tconst}, options)
+      axios.post(addurl, {tconst: generatedMovies.tconst}, options).then(res => {
+        window.alert(res.data.message)
+      })
     }
   
 
